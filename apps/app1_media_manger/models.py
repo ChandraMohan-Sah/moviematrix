@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from cloudinary_storage.storage import MediaCloudinaryStorage
-
+ 
 
 class CastMedia(models.Model):
     name = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class CastMedia(models.Model):
     def __str__(self):
         return self.name
 
-
+ 
 class CreatorMedia(models.Model):
     name = models.CharField(max_length=255)
     media_files = GenericRelation('MediaFile') 
@@ -123,8 +123,4 @@ class MediaFile(models.Model):
 
     def __str__(self):
         return f"ID-{self.object_id}: {self.media_type} for {self.related_object} ({self.content_type})"
-
-
-
-
 

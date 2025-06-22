@@ -43,6 +43,12 @@ INSTALLED_APPS = [
     'bot_based_search',
     
     'home',
+
+    # django restframework
+    'rest_framework',
+
+    # swagger
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
