@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class App2GenerPlatformConfig(AppConfig):
+class App8LangProdCompanyConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app2_gener_platform'
+    name = 'app8_lang_prod_company'

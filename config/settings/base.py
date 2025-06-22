@@ -16,7 +16,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    # object storage 
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
 
     # Custom apps
     'app1_media_manger',
@@ -26,14 +30,18 @@ INSTALLED_APPS = [
     'app5_writer',
     'app6_movie',
     'app7_tvshow',
+    'app8_lang_prod_company',
+
     'user_app',
     'user_profile',
     'user_activity',
     'user_preference',
     'user_dashboard',
+
     'recommendation_engine',
     'collector_engine',
     'bot_based_search',
+    
     'home',
 ]
 
@@ -83,5 +91,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+ 

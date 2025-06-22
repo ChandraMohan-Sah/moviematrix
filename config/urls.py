@@ -29,14 +29,18 @@ urlpatterns = [
     path('app5_writer/', include('apps.app5_writer.api_of_app5_writer.urls')),
     path('app6_movie/', include('apps.app6_movie.api_of_app6_movie.urls')),
     path('app7_tvshow/', include('apps.app7_tvshow.api_of_app7_tvshow.urls')),
+    path('app8_lang_prod_company/', include('apps.app8_lang_prod_company.api_of_app8_lang_prod_company.urls')),
+
     path('user_app/', include('apps.user_app.api_of_user_app.urls')),
     path('user_profile/', include('apps.user_profile.api_of_user_profile.urls')),
     path('user_activity/', include('apps.user_activity.api_of_user_activity.urls')),
     path('user_preference/', include('apps.user_preference.api_of_user_preference.urls')),
     path('user_dashboard/', include('apps.user_dashboard.api_of_user_dashboard.urls')),
+
     path('recommendation_engine/', include('apps.recommendation_engine.api_of_recommendation_engine.urls')),
     path('collector_engine/', include('apps.collector_engine.api_of_collector_engine.urls')),
     path('bot_based_search/', include('apps.bot_based_search.api_of_bot_based_search.urls')),
+    
     path('core/', include('apps.core.api_of_core.urls')),
 ]
 

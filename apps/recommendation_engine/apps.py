@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class RecommendationEngineConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.recommendation_engine'
+    name = 'recommendation_engine'
