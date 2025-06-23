@@ -12,6 +12,12 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework import generics
 
+
+#swagger docs
+from drf_yasg.utils import swagger_auto_schema
+from django.utils.decorators import method_decorator
+
+
 # ------- CAST VIEWS -------
 # For listing all cast entries
 class CastListView(generics.ListAPIView):

@@ -59,7 +59,7 @@ class BaseMediaView:
 
 # For listing all movie entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='get all movie with media',
+    tags=['App1 : MovieMedia APIs'], operation_id='get all movie with media',
     operation_description='get all movie with media',
 ))
 class MovieListView(generics.ListAPIView):
@@ -69,7 +69,7 @@ class MovieListView(generics.ListAPIView):
 
 # For creating single movie entry
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='create single movie with media',
+    tags=['App1 : MovieMedia APIs'], operation_id='create single movie with media',
     operation_description='create single movie with media',
 ))
 class MovieCreateView(generics.CreateAPIView):
@@ -88,16 +88,16 @@ class MovieCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='retrieve particular movie detail',
+    tags=['App1 : MovieMedia APIs'], operation_id='retrieve particular movie detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='update particular movie detail',
+    tags=['App1 : MovieMedia APIs'], operation_id='update particular movie detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='patch particular movie detail',
+    tags=['App1 : MovieMedia APIs'], operation_id='patch particular movie detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='delete particular movie detail',
+    tags=['App1 : MovieMedia APIs'], operation_id='delete particular movie detail',
 ))
 class MovieDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MovieMedia.objects.all()
@@ -129,7 +129,7 @@ class MovieDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # For listing all cast entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='list all cast with media',
+    tags=['App1 : CastMedia APIs'], operation_id='list all cast with media',
     operation_description='list all cast with media',
 ))
 class CastListView(generics.ListAPIView):
@@ -139,7 +139,7 @@ class CastListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='create independent cast with media',
+    tags=['App1 : CastMedia APIs'], operation_id='create independent cast with media',
     operation_description='create independent cast with media',
 ))
 class CastCreateView(generics.CreateAPIView):
@@ -158,16 +158,16 @@ class CastCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='retrieve particular caste detail',
+    tags=['App1 : CastMedia APIs'], operation_id='retrieve particular caste detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='update particular caste detail',
+    tags=['App1 : CastMedia APIs'], operation_id='update particular caste detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='patch particular caste detail',
+    tags=['App1 : CastMedia APIs'], operation_id='patch particular caste detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='delete particular caste detail',
+    tags=['App1 : CastMedia APIs'], operation_id='delete particular caste detail',
 ))
 class CastDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CastMedia.objects.all()
@@ -197,7 +197,7 @@ class CastDetailView(generics.RetrieveUpdateDestroyAPIView):
 # -----------------------------------------------------------------------------------------
 # For listing all creator entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='list all creator with media',
+    tags=['App1 : CreatorMedia APIs'], operation_id='list all creator with media',
     operation_description='list all creator with media',
 ))
 class CreatorListView(generics.ListAPIView):
@@ -207,7 +207,7 @@ class CreatorListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='create independent creator',
+    tags=['App1 : CreatorMedia APIs'], operation_id='create independent creator',
     operation_description='create independent creator',
 ))
 class CreatorCreateView(generics.CreateAPIView):
@@ -226,16 +226,16 @@ class CreatorCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='retrieve particular creator detail',
+    tags=['App1 : CreatorMedia APIs'], operation_id='retrieve particular creator detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='update particular creator detail',
+    tags=['App1 : CreatorMedia APIs'], operation_id='update particular creator detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='patch particular creator detail',
+    tags=['App1 : CreatorMedia APIs'], operation_id='patch particular creator detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : Creator APIs'], operation_id='delete particular creator detail',
+    tags=['App1 : CreatorMedia APIs'], operation_id='delete particular creator detail',
 ))
 class CreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CreatorMedia.objects.all()
@@ -264,7 +264,7 @@ class CreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # For listing all Writer entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='list all writer with media',
+    tags=['App1 : WriterMedia APIs'], operation_id='list all writer with media',
     operation_description='list all writer with media',
 ))
 class WriterListView(generics.ListAPIView):
@@ -275,7 +275,7 @@ class WriterListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='create independent writer',
+    tags=['App1 : WriterMedia APIs'], operation_id='create independent writer',
     operation_description='create independent writer',
 ))
 class WriterCreateView(generics.CreateAPIView):
@@ -293,16 +293,16 @@ class WriterCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='retrieve particular writer detail',
+    tags=['App1 : WriterMedia APIs'], operation_id='retrieve particular writer detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='update particular writer detail',
+    tags=['App1 : WriterMedia APIs'], operation_id='update particular writer detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='patch particular writer detail',
+    tags=['App1 : WriterMedia APIs'], operation_id='patch particular writer detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : Writer APIs'], operation_id='delete particular writer detail',
+    tags=['App1 : WriterMedia APIs'], operation_id='delete particular writer detail',
 ))
 class WriterDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = WriterMedia.objects.all()
@@ -333,7 +333,7 @@ class WriterDetailView(generics.RetrieveUpdateDestroyAPIView):
 # -----------------------------------------------------------------------------------------
 # For listing all tvshow entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='list all tvshow with media',
+    tags=['App1 : TVShowMedia APIs'], operation_id='list all tvshow with media',
     operation_description='list all tvshow with media',
 ))
 class TvShowListView(generics.ListAPIView):
@@ -342,7 +342,7 @@ class TvShowListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='create independent tvshow',
+    tags=['App1 : TVShowMedia APIs'], operation_id='create independent tvshow',
     operation_description='create independent tvshow',
 ))
 class TVShowCreateView(generics.CreateAPIView):
@@ -361,16 +361,16 @@ class TVShowCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='retrieve particular tvshow detail',
+    tags=['App1 : TVShowMedia APIs'], operation_id='retrieve particular tvshow detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='update particular tvshow detail',
+    tags=['App1 : TVShowMedia APIs'], operation_id='update particular tvshow detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='patch particular tvshow detail',
+    tags=['App1 : TVShowMedia APIs'], operation_id='patch particular tvshow detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : TVShow APIs'], operation_id='delete particular tvshow detail',
+    tags=['App1 : TVShowMedia APIs'], operation_id='delete particular tvshow detail',
 ))
 class TVShowDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TVShowMedia.objects.all()
@@ -402,7 +402,7 @@ class TVShowDetailView(generics.RetrieveUpdateDestroyAPIView):
 # -----------------------------------------------------------------------------------------
 # For listing all season entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='list all season for particular tvshow',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='list all season for particular tvshow',
     operation_description='list all season for particular tvshow',
 ))
 class SeasonListView(generics.ListAPIView):
@@ -412,7 +412,7 @@ class SeasonListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='create season for particular tvshow',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='create season for particular tvshow',
     operation_description='create independent tvshow',
 ))
 class SeasonCreateView(generics.CreateAPIView):
@@ -432,16 +432,16 @@ class SeasonCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='retrieve particular season detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='retrieve particular season detail',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='update particular season detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='update particular season detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='patch particular season detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='patch particular season detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season  APIs'], operation_id='delete particular season detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia  APIs'], operation_id='delete particular season detail',
 ))
 class SeasonDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = SeasonMedia.objects.all()
@@ -470,7 +470,7 @@ class SeasonDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # For listing all episode entries with media
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='list all episode with media',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='list all episode with media',
     operation_description='list all episode with media',
 ))
 class EpisodeListView(generics.ListAPIView):
@@ -479,7 +479,7 @@ class EpisodeListView(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='create episode for particular season',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='create episode for particular season',
     operation_description='create independent tvshow',
 ))
 class EpisodeCreateView(generics.CreateAPIView):
@@ -497,16 +497,16 @@ class EpisodeCreateView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='retrieve particular episode detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='retrieve particular episode detail',
 )) 
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='update particular episode detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='update particular episode detail',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='patch particular episode detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='patch particular episode detail',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='delete particular episode detail',
+    tags=['App1 : TVshowMedia -> SeasonMedia -> EpisodeMedia APIs'], operation_id='delete particular episode detail',
 ))
 class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EpisodeMedia.objects.all()
