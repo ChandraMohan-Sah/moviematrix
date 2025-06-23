@@ -54,11 +54,23 @@ class BaseMediaView:
 
 
 
-# POST Create Views with media handling 
+# GET- Fetch , POST Create : Views with media handling 
 # -----------------------------------------------------------------------------------------
+
+# For listing all movie entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : Movie APIs'], operation_id='get all movie with media',
+    operation_description='get all movie with media',
+))
+class MovieListView(generics.ListAPIView):
+    queryset = MovieMedia.objects.all()
+    serializer_class = MovieSerializerWithMedia
+
+
+# For creating single movie entry
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Movie APIs'], operation_id='create movie',
-    operation_description='create movie',
+    tags=['App1 : Movie APIs'], operation_id='create single movie with media',
+    operation_description='create single movie with media',
 ))
 class MovieCreateView(generics.CreateAPIView):
     queryset = MovieMedia.objects.all()
@@ -114,11 +126,21 @@ class MovieDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # -----------------------------------------------------------------------------------------
-  
+
+# For listing all cast entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : Cast APIs'], operation_id='list all cast with media',
+    operation_description='list all cast with media',
+))
+class CastListView(generics.ListAPIView):
+    queryset = CastMedia.objects.all()
+    serializer_class = CastSerializerWithMedia
+
+
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App1 : Cast APIs'], operation_id='create independent cast',
-    operation_description='create independent cast',
+    tags=['App1 : Cast APIs'], operation_id='create independent cast with media',
+    operation_description='create independent cast with media',
 ))
 class CastCreateView(generics.CreateAPIView):
     queryset = CastMedia.objects.all()
@@ -173,6 +195,16 @@ class CastDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # -----------------------------------------------------------------------------------------
+# For listing all creator entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : Creator APIs'], operation_id='list all creator with media',
+    operation_description='list all creator with media',
+))
+class CreatorListView(generics.ListAPIView):
+    queryset = CreatorMedia.objects.all()
+    serializer_class = CreatorSerializerWithMedia
+
+
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
     tags=['App1 : Creator APIs'], operation_id='create independent creator',
@@ -229,6 +261,16 @@ class CreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # -----------------------------------------------------------------------------------------
+
+# For listing all Writer entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : Writer APIs'], operation_id='list all writer with media',
+    operation_description='list all writer with media',
+))
+class WriterListView(generics.ListAPIView):
+    queryset = WriterMedia.objects.all()
+    serializer_class = WriterSerializerWithMedia
+
 
 
 
@@ -289,6 +331,15 @@ class WriterDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # -----------------------------------------------------------------------------------------
+# For listing all tvshow entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : TVShow APIs'], operation_id='list all tvshow with media',
+    operation_description='list all tvshow with media',
+))
+class TvShowListView(generics.ListAPIView):
+    queryset = TVShowMedia.objects.all()
+    serializer_class = TVShowSerializerWithMedia
+
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
     tags=['App1 : TVShow APIs'], operation_id='create independent tvshow',
@@ -349,6 +400,17 @@ class TVShowDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # -----------------------------------------------------------------------------------------
+# For listing all season entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : TVshow -> Season  APIs'], operation_id='list all season for particular tvshow',
+    operation_description='list all season for particular tvshow',
+))
+class SeasonListView(generics.ListAPIView):
+    queryset = SeasonMedia.objects.all()
+    serializer_class = SeasonSerializerWithMedia
+
+
+
 @method_decorator(name='post', decorator=swagger_auto_schema(
     tags=['App1 : TVshow -> Season  APIs'], operation_id='create season for particular tvshow',
     operation_description='create independent tvshow',
@@ -405,6 +467,15 @@ class SeasonDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # -----------------------------------------------------------------------------------------
+
+# For listing all episode entries with media
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App1 : TVshow -> Season -> Episode APIs'], operation_id='list all episode with media',
+    operation_description='list all episode with media',
+))
+class EpisodeListView(generics.ListAPIView):
+    queryset = EpisodeMedia.objects.all()
+    serializer_class = EpisodeSerializerWithMedia
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(

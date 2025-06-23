@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from cloudinary_storage.storage import MediaCloudinaryStorage
- 
+from django.utils.text import slugify
+
 
 class CastMedia(models.Model):
     name = models.CharField(max_length=255)
@@ -39,7 +40,13 @@ class MovieMedia(models.Model):
 
 class TVShowMedia(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
     media_files = GenericRelation('MediaFile') 
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -81,10 +88,10 @@ class EpisodeMedia(models.Model):
             
             # Set the next episode number (last + 1, or 1 if no episodes exist)
             self.episode_number = (last_episode.episode_number + 1) if last_episode else 1
-        
+
         # Save the episode
         super().save(*args, **kwargs)
-
+        
     def __str__(self):
         return f"{self.season.tvshow.name} - S{self.season.season_number}E{self.episode_number}: {self.title}"
 
