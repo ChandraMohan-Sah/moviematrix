@@ -58,6 +58,7 @@ class CastSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
     class Meta:
         model = CastMedia 
         fields = ['id', 'name', 'profile_pics', 'related_pics']
+        ref_name="App1 - castserializerwithmedia "
 
     def get_profile_pics(self, obj):
         return self.get_media(obj, 'profile_pic')
@@ -227,7 +228,7 @@ class CastCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CastMedia
         fields = ['name', 'profile_pics', 'related_pics']
-        ref_name = 'CastCreateWithMedia'  # ✅ add this line
+        ref_name = 'App1-CastCreateWithMedia'  # ✅ add this line
 
     def create(self, validated_data):
         profile_pics = validated_data.pop('profile_pics', [])
