@@ -12,6 +12,8 @@ class MediaFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaFile
         fields = ['id', 'media_type', 'file', 'cdn_url', 'uploaded_at']
+        ref_name="app4-mediafileserializer"
+
 
 
 class CastSerializer(serializers.ModelSerializer):

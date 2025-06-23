@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # CAST
-    path('casts/', views.Cast_ListCreate_View.as_view(), name='cast-list'),
+    path('casts/', views.Cast_ListCreate_View.as_view(), name='cast-create-list'),
     # path('casts/create/', views.CastCreateView.as_view(), name='cast-create'),
     path('casts/<int:pk>/', views.Cast_RUD_View.as_view(), name='cast-detail'),
 

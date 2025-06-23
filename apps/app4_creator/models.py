@@ -41,11 +41,10 @@ class CreatorCoreDetail(models.Model):
     born_date = models.DateField()
     death_date = models.DateField(null=True, blank=True)
     
-    spouses = models.ManyToManyField(Creator, related_name='spouse_of', blank=True)
-    children = models.ManyToManyField(Creator, related_name='child_of', blank=True)
-    relatives = models.ManyToManyField(Creator, related_name='relative_of', blank=True)
-
-    otherwork = models.TextField(blank=True)
+    spouses = models.JSONField(default=list, blank=True)
+    children = models.JSONField(default=list, blank=True)
+    relatives = models.JSONField(default=list, blank=True)  
+    otherwork = models.JSONField(default=list, blank=True) 
 
     def __str__(self):
         return f"Core Detail of {self.creator.creator_name}"
@@ -53,19 +52,19 @@ class CreatorCoreDetail(models.Model):
 
 
 
-class CreatorKnownFor(models.Model):
-    creator = models.ForeignKey(Creator,  on_delete=models.CASCADE, related_name='creator_known_for')
+# class CreatorKnownFor(models.Model):
+#     creator = models.ForeignKey(Creator,  on_delete=models.CASCADE, related_name='creator_known_for')
 
-    content_type = models.ForeignKey(
-        ContentType , 
-        on_delete = models.CASCADE ,
-        limit_choices_to = {
-             'model__in': ['moviemedia', 'tvshowmedia']
-        }
-    )
+#     content_type = models.ForeignKey(
+#         ContentType , 
+#         on_delete = models.CASCADE ,
+#         limit_choices_to = {
+#              'model__in': ['moviemedia', 'tvshowmedia']
+#         }
+#     )
 
-    object_id = models.PositiveIntegerField() 
-    known_work = GenericForeignKey('content_type', 'object_id')
+#     object_id = models.PositiveIntegerField() 
+#     known_work = GenericForeignKey('content_type', 'object_id')
 
-    def __str__(self):
-        return f"{self.creator.creator_name} known for {self.known_work}"
+#     def __str__(self):
+#         return f"{self.creator.creator_name} known for {self.known_work}"

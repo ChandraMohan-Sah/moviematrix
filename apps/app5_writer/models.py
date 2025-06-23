@@ -53,21 +53,21 @@ class WriterCoreDetail(models.Model):
 
 
 
-class WriterKnownFor(models.Model):
-    writer = models.ForeignKey(Writer,  on_delete=models.CASCADE, related_name='writer_known_for')
+# class WriterKnownFor(models.Model):
+#     writer = models.ForeignKey(Writer,  on_delete=models.CASCADE, related_name='writer_known_for')
 
-    content_type = models.ForeignKey(
-        ContentType , 
-        on_delete = models.CASCADE ,
-        limit_choices_to = {
-             'model__in': ['moviemedia', 'tvshowmedia']
-        }
-    )
+#     content_type = models.ForeignKey(
+#         ContentType , 
+#         on_delete = models.CASCADE ,
+#         limit_choices_to = {
+#              'model__in': ['moviemedia', 'tvshowmedia']
+#         }
+#     )
 
-    object_id = models.PositiveIntegerField() 
-    known_work = GenericForeignKey('content_type', 'object_id')
+#     object_id = models.PositiveIntegerField() 
+#     known_work = GenericForeignKey('content_type', 'object_id')
 
-    def __str__(self):
-        return f"{self.writer.writer_name} known for {self.known_work}"
+#     def __str__(self):
+#         return f"{self.writer.writer_name} known for {self.known_work}"
 
 

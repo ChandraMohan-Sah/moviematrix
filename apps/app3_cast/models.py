@@ -45,7 +45,7 @@ class CastCoreDetail(models.Model):
     children = models.JSONField(default=list, blank=True)
     relatives = models.JSONField(default=list, blank=True)  
     otherwork = models.JSONField(default=list, blank=True) 
-
+ 
     def __str__(self):
         return f"Core Detail of {self.cast.cast_name}"
 
