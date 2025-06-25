@@ -50,7 +50,7 @@ class Writer_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     operation_description='list all writer core detail',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App5 : WriteCoreDetail APIs'], operation_id='create a writer core detail',
+    tags=['App5 : WriterCoreDetail APIs'], operation_id='create a writer core detail',
     operation_description='create a writer core detail',
 )) 
 class WriterCoreDetail_ListCreate_View(generics.ListCreateAPIView):
