@@ -32,7 +32,7 @@ class Writer(models.Model):
     def __str__(self):
         return f"{self.writer_name}"
     
-
+ 
 
  
 class WriterCoreDetail(models.Model):

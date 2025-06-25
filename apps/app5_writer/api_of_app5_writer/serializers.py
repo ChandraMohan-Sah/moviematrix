@@ -1,8 +1,8 @@
 # serializers.py
 
 from rest_framework import serializers
-from app1_media_manger.models import MediaFile 
-from app5_writer.models import Writer, WriterMedia, WriterCoreDetail
+from app1_media_manger.models import MediaFile , WriterMedia
+from app5_writer.models import Writer, WriterCoreDetail
 
 class MediaFileSerializer(serializers.ModelSerializer):
     class Meta: 

@@ -62,10 +62,6 @@ class Movie(models.Model):
     def related_pic(self):
         return self.moviemedia.media_files.filter(media_type='related_pic')
 
-    @property
-    def profile_pic(self):
-        return self.moviemedia.media_files.filter(media_type='profile_pic')
-
     movie_genre = models.ManyToManyField(Genre,  related_name='movie_genre')
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE, related_name="movie_released_platform")
 
@@ -98,7 +94,7 @@ class MovieRatingReview(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE,related_name='movie_reviews')
     user_movie_review = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_movie_review')
     rating = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
-    description = models.CharField(max_length=200, blank=True)
+    review = models.CharField(max_length=200, blank=True)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -151,21 +147,21 @@ class MovieTechSpecs(models.Model):
 
     movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="movie_tech_specs")
     runtime = models.PositiveIntegerField(help_text="Runtime in minutes")
-    color = models.CharField(max_length=20, choices=COLOR_CHOICES)
-    sound_mix = models.CharField(max_length=30, choices=SOUND_MIX_CHOICES)
+    color = models.CharField(max_length=20, choices=COLOR_CHOICES, default='color')
+    sound_mix = models.CharField(max_length=30, choices=SOUND_MIX_CHOICES, default='dolby_atmos')
 
     def __str__(self):
         return f"Tech Specification for: {self.movie.title}."
 
 
 class UserMovieWatchlist(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='movie_watchlist')
+    user_watchlist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='movie_watchlist')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='watchlisted_by')
     added_at = models.DateTimeField(auto_now_add=True)
     removed_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('user', 'movie')
+        unique_together = ('user_watchlist', 'movie')
         ordering = ['-added_at']
 
     def __str__(self):
@@ -173,13 +169,13 @@ class UserMovieWatchlist(models.Model):
 
 
 class UserMovieViewed(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='viewed_movies')
+    user_viewed = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='viewed_movies')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='viewed_by')
     viewed_at = models.DateTimeField(auto_now_add=True)
     removed_at = models.DateTimeField(auto_now=True)
 
     class Meta: 
-        unique_together = ('user', 'movie')
+        unique_together = ('user_viewed', 'movie')
         ordering = ['-viewed_at']
     
     def __str__(self):
@@ -197,13 +193,13 @@ class MovieVotes(models.Model):
         ('excited', 'Excited'),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_vote = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="votes")
     vote_type = models.CharField(max_length=20, choices = VOTE_CHOICES)
     voted_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'movie')  # 1 vote per user per movie
+        unique_together = ('user_vote', 'movie')  # 1 vote per user per movie
 
     def __str__(self):
         return f"{self.user.username} voted '{self.vote_type}' for {self.movie.title}"

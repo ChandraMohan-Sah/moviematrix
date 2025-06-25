@@ -40,7 +40,7 @@ class Writer_ListCreate_View(generics.ListCreateAPIView):
 class Writer_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = Writer.objects.all().select_related('writermedia').prefetch_related('writermedia__media_files')
     serializer_class = WriterSerializer 
-
+ 
 
 
 
