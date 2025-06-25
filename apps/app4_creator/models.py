@@ -12,7 +12,7 @@ class Creator(models.Model):
         on_delete=models.CASCADE,
         related_name='app4_creator'
     )
-
+ 
     # Media access shortcut
     @property
     def creator_name(self):

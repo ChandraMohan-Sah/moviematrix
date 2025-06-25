@@ -71,3 +71,29 @@ class CreatorCoreDetail_ListCreate_View(generics.ListCreateAPIView):
 class CreatorCoreDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = CreatorCoreDetail.objects.select_related('creator')
     serializer_class = CreatorCoreDetailSerializer
+
+
+
+
+# @method_decorator(name='get', decorator=swagger_auto_schema(
+#     tags=['App5 : Writer APIs'], operation_id='list all  writer',
+#     operation_description='list all writer',
+# ))
+# @method_decorator(name='post', decorator=swagger_auto_schema(
+#     tags=['App5 : Writer APIs'], operation_id='create a writer',
+#     operation_description='create a writer',
+# )) 
+
+
+# @method_decorator(name='get', decorator=swagger_auto_schema(
+#     tags=['App5 : WriterCoreDetail APIs'], operation_id='retrieve particular writer detail',
+# ))
+# @method_decorator(name='put', decorator=swagger_auto_schema(
+#     tags=['App5 : WriterCoreDetail APIs'], operation_id='update particular writer detail',
+# ))
+# @method_decorator(name='patch', decorator=swagger_auto_schema(
+#     tags=['App5 : WriterCoreDetail APIs'], operation_id='patch particular writer detail',
+# ))
+# @method_decorator(name='delete', decorator=swagger_auto_schema(
+#     tags=['App5 : WriterCoreDetail APIs'], operation_id='delete particular writer detail',
+# ))

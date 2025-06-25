@@ -288,7 +288,7 @@ class WriterCreateView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data, many=many)
         serializer.is_valid(raise_exception=True)
         writer = serializer.save()
-        output_serializer = WriterSerializer(writer,many=many)
+        output_serializer = WriterSerializerWithMedia(writer,many=many)
         return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
 

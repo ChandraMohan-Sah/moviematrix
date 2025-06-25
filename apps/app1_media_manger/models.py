@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.utils.text import slugify
 
-
+ 
 class CastMedia(models.Model):
     name = models.CharField(max_length=255)
     media_files = GenericRelation('MediaFile')  
