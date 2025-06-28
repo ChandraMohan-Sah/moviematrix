@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from django.conf import settings  # for user model
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -156,7 +155,7 @@ class MovieTechSpecs(models.Model):
 
 class UserMovieWatchlist(models.Model):
     user_watchlist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='movie_watchlist')
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='watchlisted_by')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_watchlisted_by')
     added_at = models.DateTimeField(auto_now_add=True)
     removed_at = models.DateTimeField(auto_now=True)
 
@@ -165,7 +164,7 @@ class UserMovieWatchlist(models.Model):
         ordering = ['-added_at']
 
     def __str__(self):
-        return f"{self.user.username} watchlisted {self.movie.title}" 
+        return f"{self.user_watchlist.username} watchlisted {self.movie.title}" 
 
 
 class UserMovieViewed(models.Model):
@@ -179,7 +178,7 @@ class UserMovieViewed(models.Model):
         ordering = ['-viewed_at']
     
     def __str__(self):
-        return f"{self.user.username} viewed {self.movie.title}"
+        return f"{self.user_viewed.username} viewed {self.movie.title}"
     
 
 class MovieVotes(models.Model):
@@ -202,4 +201,4 @@ class MovieVotes(models.Model):
         unique_together = ('user_vote', 'movie')  # 1 vote per user per movie
 
     def __str__(self):
-        return f"{self.user.username} voted '{self.vote_type}' for {self.movie.title}"
+        return f"{self.user_vote.username} voted '{self.vote_type}' for {self.movie.title}"

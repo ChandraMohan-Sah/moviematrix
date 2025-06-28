@@ -103,10 +103,12 @@ class MovieSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
     trailers = serializers.SerializerMethodField()
     videos = serializers.SerializerMethodField()
     related_pics = serializers.SerializerMethodField()
+    movie_slug = serializers.SlugField(read_only=True)
+
 
     class Meta:
         model = MovieMedia
-        fields = ['id', 'name', 'banners', 'thumbnails', 'trailers', 'videos', 'related_pics']
+        fields = ['id', 'name', 'banners', 'thumbnails', 'trailers', 'videos', 'related_pics', 'movie_slug']
 
     def get_banners(self, obj):
         return self.get_media(obj, 'banner')
@@ -125,15 +127,16 @@ class MovieSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
     
 
 class EpisodeSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
-    tvshow = serializers.SlugRelatedField(read_only=True, slug_field='slug')
+    tvshow = serializers.SlugRelatedField(read_only=True, slug_field='tvshow_slug')
     season = serializers.SerializerMethodField()
 
     thumbnails = serializers.SerializerMethodField()
     videos = serializers.SerializerMethodField()
+    episode_slug = serializers.SlugField(read_only=True) 
 
     class Meta:
         model = EpisodeMedia
-        fields = ['id', 'title', 'tvshow', 'season', 'thumbnails', 'videos']
+        fields = ['id', 'title', 'tvshow', 'season', 'thumbnails', 'videos', 'episode_slug']
 
     def get_season(self, obj):
         return obj.season.season_number
@@ -165,7 +168,7 @@ class TVShowSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
 
     class Meta:
         model = TVShowMedia
-        fields = ['id', 'name', 'slug' ,'seasons', 'banners', 'thumbnails', 'trailers']
+        fields = ['id', 'name', 'tvshow_slug' ,'seasons', 'banners', 'thumbnails', 'trailers']
 
     def get_banners(self, obj):
         return self.get_media(obj, 'banner')
@@ -186,10 +189,11 @@ class MovieCreateSerializer(serializers.ModelSerializer):
     trailers = serializers.ListField(child=serializers.URLField(), required=False)
     videos = serializers.ListField(child=serializers.URLField(), required=False)
     related_pics = serializers.ListField(child=serializers.URLField(), required=False)
+    movie_slug = serializers.SlugField(read_only=True)
 
     class Meta:
         model = MovieMedia
-        fields = ['name', 'banners', 'thumbnails', 'trailers', 'videos', 'related_pics']
+        fields = ['name', 'banners', 'thumbnails', 'trailers', 'videos', 'related_pics', 'movie_slug']
 
     def create(self, validated_data):
         banners = validated_data.pop('banners', [])
@@ -362,7 +366,7 @@ class TVShowCreateSerializer(serializers.ModelSerializer):
 class SeasonCreateSerializer(serializers.ModelSerializer):
     tvshow = serializers.SlugRelatedField(
         queryset=TVShowMedia.objects.all(),
-        slug_field='slug'
+        slug_field='tvshow_slug'
     )
         
     banners = serializers.ListField(child=serializers.URLField(), required=False)
@@ -397,21 +401,22 @@ class SeasonCreateSerializer(serializers.ModelSerializer):
 class EpisodeCreateSerializer(serializers.ModelSerializer):
     tvshow = serializers.SlugRelatedField(
         queryset=TVShowMedia.objects.all(),
-        slug_field='slug'
+        slug_field='tvshow_slug'
     )
     season_number = serializers.IntegerField(write_only=True)
     thumbnails = serializers.ListField(child=serializers.URLField(), required=False)
     videos = serializers.ListField(child=serializers.URLField(), required=False)
+    episode_slug = serializers.SlugField(read_only=True) 
 
     class Meta:
         model = EpisodeMedia
-        fields = ['id', 'title', 'tvshow', 'season_number', 'thumbnails', 'videos']
+        fields = ['id', 'title', 'tvshow', 'season_number', 'thumbnails', 'videos', 'episode_slug']
 
     def validate(self, data):
         tvshow = data.get('tvshow')
         season_number = data.pop('season_number')
 
-        # ✅ Find Season object by tvshow + season_number
+        # Find Season object by tvshow + season_number
         try:
             season = SeasonMedia.objects.get(tvshow=tvshow, season_number=season_number)
         except SeasonMedia.DoesNotExist:

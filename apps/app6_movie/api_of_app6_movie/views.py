@@ -31,7 +31,7 @@ class Movie_LC_View(generics.ListCreateAPIView):
     queryset = Movie.objects.all().select_related('moviemedia').prefetch_related('moviemedia__media_files')
     serializer_class = MovieSerializer 
 
-
+ 
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(

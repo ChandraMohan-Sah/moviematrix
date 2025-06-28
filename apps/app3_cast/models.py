@@ -1,9 +1,5 @@
 from django.db import models
 from app1_media_manger.models import CastMedia
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from app1_media_manger.models import MovieMedia, TVShowMedia  # assuming these exist
-
 
 class Cast(models.Model):
     """Main movie model in app6 with media integration"""

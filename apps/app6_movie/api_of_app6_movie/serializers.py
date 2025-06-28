@@ -15,10 +15,10 @@ from app8_lang_prod_company.models import Language, ProductionCompany
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
+ 
 
 '''
-    Notes : 
+    Notes : (serializer )
         - Translator: between Python models and JSON
         - Gatekeeper: validates what's allowed in and what's shown outside
 '''
@@ -40,7 +40,7 @@ class MovieSerializer(serializers.ModelSerializer):
     related_pic = MediaFileSerializer(many=True, read_only=True)
 
     moviemedia = serializers.SlugRelatedField(
-        slug_field = 'name', # Match using `name` instead of ID
+        slug_field = 'movie_slug', # Match using `movie_slug` instead of ID
         queryset = MovieMedia.objects.all()
     )
 

@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'app6_movie',
     'app7_tvshow',
     'app8_lang_prod_company',
+    'app9_season',
+    'app10_episode',
 
     'user_app',
     'user_profile',
