@@ -51,6 +51,10 @@ INSTALLED_APPS = [
 
     # swagger
     'drf_yasg',
+
+    #authentication
+    'rest_framework.authtoken'
+    
 ]
 
 MIDDLEWARE = [
@@ -112,3 +116,22 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
  
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+# For token authentication in swagger UI
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "Token-based auth using `Token <your_token>`",
+        }
+    },
+}

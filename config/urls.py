@@ -41,7 +41,7 @@ schema_view = get_schema_view(
       license=openapi.License(name="MIT License"),
    ),
    public=True,
-   permission_classes=[permissions.IsAuthenticated],
+   permission_classes=[permissions.IsAuthenticatedOrReadOnly],
 )
 
 urlpatterns = [
@@ -58,7 +58,7 @@ urlpatterns = [
    #  path('app9_season/', include('apps.app9_season.api_of_app9_season.urls')),
     path('app10_episode/', include('apps.app10_episode.api_of_app10_episode.urls')),   
 
-    path('user_app/', include('apps.user_app.api_of_user_app.urls')),
+    path('account/', include('apps.user_app.api_of_user_app.urls')),
     path('user_profile/', include('apps.user_profile.api_of_user_profile.urls')),
     path('user_activity/', include('apps.user_activity.api_of_user_activity.urls')),
     path('user_preference/', include('apps.user_preference.api_of_user_preference.urls')),
