@@ -30,8 +30,8 @@ class UserProfileUpdateView(generics.UpdateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['User Profile'], operation_id='fetch all user information',
-    operation_description='fetch all user information', 
+    tags=['User Profile'], operation_id='fetch user profile information',
+    operation_description='fetch user profile information', 
 ))
 class UserProfileInfoView(generics.ListAPIView):
     queryset = UserProfile.objects.all()

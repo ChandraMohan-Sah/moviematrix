@@ -71,7 +71,7 @@ class EpisodeGeneralDetail(models.Model):
 
 
 class EpisodeWatchlist(models.Model):
-    user_watchlist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_watchlist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="episode_watchlist")
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name="episode_watchlisted_by")
 
     added_at = models.DateTimeField(auto_now_add=True)
@@ -88,7 +88,7 @@ class EpisodeWatchlist(models.Model):
 
 
 class EpisodeViewed(models.Model):
-    user_viewed = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_viewed = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="episode_viewed")
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name="episode_viewed_by")
 
     viewed_at = models.DateTimeField(auto_now_add=True)
