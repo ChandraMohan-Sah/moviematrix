@@ -202,3 +202,19 @@ class MovieVotes(models.Model):
 
     def __str__(self):
         return f"{self.user_vote.username} voted '{self.vote_type}' for {self.movie.title}"
+
+class MovieWatchHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movie_watch_history')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='watch_history')
+    watched_at = models.DateTimeField(auto_now_add=True)
+    duration_watched = models.PositiveIntegerField(null=True, blank=True, help_text="Duration watched in seconds")
+    is_completed = models.BooleanField(default=False, help_text="Whether the movie was fully watched")
+
+    class Meta:
+        ordering = ['-watched_at']  # Latest first
+        unique_together = ('user', 'movie', 'watched_at')  # Prevent duplicate entries at same timestamp
+
+    def __str__(self):
+        return f"{self.user.username} watched {self.movie.title} at {self.watched_at}" 
+
+ 

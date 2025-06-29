@@ -55,7 +55,11 @@ class UserDashboard(models.Model):
 
 
     # --------------------Watch History ------------------------
+    @property
+    def movie_watch_history(self):
+        return self.user.movie_watch_history.all()
 
     def __str__(self):
         return f"{self.user.username}'s Dashboard"
     
+ 

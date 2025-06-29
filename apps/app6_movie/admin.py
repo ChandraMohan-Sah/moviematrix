@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
         Movie, MovieGeneralDetail , MovieRatingReview,  MovieCoreDetail, MovieBoxOffice,
-        MovieTechSpecs, UserMovieWatchlist, UserMovieViewed, MovieVotes
+        MovieTechSpecs, UserMovieWatchlist, UserMovieViewed, MovieVotes, MovieWatchHistory
     )
 
 
@@ -14,4 +14,5 @@ admin.site.register(MovieTechSpecs)
 admin.site.register(UserMovieWatchlist)
 admin.site.register(UserMovieViewed)
 admin.site.register(MovieVotes)
+admin.site.register(MovieWatchHistory)
 

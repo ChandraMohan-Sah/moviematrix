@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+
+# collect - movies with top ratings
+
+# collect - movie with maximum reviews 
+
+# collect - movie with 

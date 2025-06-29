@@ -5,7 +5,7 @@ from app1_media_manger.models import MediaFile, MovieMedia
 from app6_movie.models import ( 
     Movie, MovieGeneralDetail , MovieCoreDetail , MovieBoxOffice, 
     MovieTechSpecs, MovieRatingReview, UserMovieWatchlist ,
-    UserMovieViewed, MovieVotes
+    UserMovieViewed, MovieVotes, MovieWatchHistory
 )
 from app2_gener_platform.models import Genre, Platform
 from app3_cast.models import Cast
@@ -383,3 +383,30 @@ class UserMovieViewedSerializer(serializers.ModelSerializer):
 
 
 
+class MovieWatchHistorySerializer(serializers.ModelSerializer):
+    movie = MovieSerializer(read_only=True)
+    movie_id = serializers.PrimaryKeyRelatedField(
+        queryset=Movie.objects.all(),
+        source='movie',
+        write_only=True
+    )
+    user = serializers.StringRelatedField(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source='user',
+        write_only=True
+    )
+
+    class Meta:
+        model = MovieWatchHistory
+        fields = [
+            'id',
+            'movie',
+            'movie_id',
+            'user',
+            'user_id',
+            'watched_at',
+            'duration_watched',
+            'is_completed'
+        ]
+        

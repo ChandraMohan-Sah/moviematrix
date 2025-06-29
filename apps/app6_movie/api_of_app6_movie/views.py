@@ -2,13 +2,14 @@
 from app6_movie.models import  ( 
     Movie, MovieGeneralDetail , MovieCoreDetail, 
     MovieBoxOffice, MovieTechSpecs, MovieRatingReview,
-    UserMovieWatchlist, UserMovieViewed, MovieVotes
+    UserMovieWatchlist, UserMovieViewed, MovieVotes, MovieWatchHistory
 )
 
 from .serializers import  (
     MovieSerializer, MovieGeneralDetailSerializer, MovieCoreDetailSerializer,
     MovieBoxOfficeSerializer, MovieTechSpecsSerializer, MovieRatingReviewSerializer,
-    UserMovieWatchlistSerializer, UserMovieViewedSerializer, MovieVotesSerializer
+    UserMovieWatchlistSerializer, UserMovieViewedSerializer, MovieVotesSerializer,
+    MovieWatchHistorySerializer
 )
 
 from rest_framework import generics , status
@@ -17,6 +18,10 @@ from rest_framework.response import Response
 # swagger docs 
 from drf_yasg.utils import swagger_auto_schema 
 from django.utils.decorators import method_decorator 
+
+from rest_framework.decorators import APIView
+from rest_framework import permissions
+from django.shortcuts import get_object_or_404
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
@@ -327,4 +332,16 @@ class UserMovieViewedToggleView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@method_decorator(name='post', decorator=swagger_auto_schema(
+    tags=['App6 : MovieHistory APIs'], operation_id='create a user history',
+    operation_description='create a user history',
+)) 
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App6 : MovieHistory APIs'], operation_id='create a user history',
+    operation_description='create a user history',
+)) 
+class MovieWatchHistoryView(generics.ListCreateAPIView):
+    queryset = MovieWatchHistory.objects.all()
+    serializer_class = MovieWatchHistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
 
