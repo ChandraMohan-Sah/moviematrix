@@ -31,7 +31,7 @@ from django.urls import reverse
                 : fails if the key is missing or value is different 
 
 '''
-
+ 
 
 class TestRegisterationView(APITestCase):
 

@@ -38,3 +38,4 @@ class UserProfileInfoView(generics.ListAPIView):
     serializer_class = CompleteUserProfileInfoSerializer
     permission_classes = [permissions.IsAdminUser]
 
+ 
