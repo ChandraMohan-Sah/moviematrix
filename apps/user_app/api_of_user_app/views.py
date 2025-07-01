@@ -22,7 +22,8 @@ def logout_view(request):
             return Response({
                 "error":"Invalid token or user not authenticated"
             }, status = 400)
-        
+  
+ 
 
 @swagger_auto_schema(
     method='post',
