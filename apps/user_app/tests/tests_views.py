@@ -90,19 +90,20 @@ class TestLoginView(APITestCase):
 
 
     def test_register_then_login_success(self):
-        response = self.client.post(self.url_register, self.register_payload, format='json')
-        response = self.client.post(self.url_login, self.valid_login_payload, format='json')
-        # various checks
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("token", response.data)
+        response1 = self.client.post(self.url_register, self.register_payload, format='json')
+        response2 = self.client.post(self.url_login, self.valid_login_payload, format='json')
+        # various 
+        self.assertEqual(response1.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response2.status_code, status.HTTP_200_OK)
+        self.assertIn("token", response2.data)
         self.assertTrue(User.objects.filter(username="testuser").exists)
 
 
     def test_register_then_login_filure(self):
-        response = self.client.post(self.url_register, self.register_payload, format='json')
-        response = self.client.post(self.url_login, self.invalid_login_payload, format='json')
+        response1 = self.client.post(self.url_register, self.register_payload, format='json')
+        response2 = self.client.post(self.url_login, self.invalid_login_payload, format='json')
         # various checks
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -128,14 +129,18 @@ class TestLogoutView(APITestCase):
 
 
     def test_logout_success(self):
-        response = self.client.post(self.url_register, self.register_payload, format='json')
-        response = self.client.post(self.url_login, self.login_payload, format='json')
-        response = self.client.post(self.url_logout, self.logout_payload, format='json')
+        response1 = self.client.post(self.url_register, self.register_payload, format='json')
+        response2 = self.client.post(self.url_login, self.login_payload, format='json')
+        # fetch token after login
+        token = response2.data["token"]
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+        response3 = self.client.post(self.url_logout, {}, format='json')
+
         # various checks
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("Logout Successfully", str(response.data)) 
-
-
+        self.assertEqual(response1.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response2.status_code, status.HTTP_200_OK) 
+        self.assertEqual(response3.status_code, status.HTTP_200_OK) 
+        self.assertIn("Logout Successfully", str(response3.data)) 
 
 
 

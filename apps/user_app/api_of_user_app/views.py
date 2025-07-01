@@ -21,13 +21,13 @@ def logout_view(request):
         except (AttributeError, Token.DoesNotExist):
             return Response({
                 "error":"Invalid token or user not authenticated"
-            }, status = 400)
+            }, status = 401)
   
  
 
 @swagger_auto_schema(
     method='post',
-    request_body=RegistrationSerializer,  # 👈 this is what enables the payload form
+    request_body=RegistrationSerializer,  #  this is what enables the payload form
     operation_description="Register a new user",
     # operation_summary="User Registration",
     tags=['User Registration '],
