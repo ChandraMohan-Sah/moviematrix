@@ -33,7 +33,7 @@ class Writer_ListCreate_View(generics.ListCreateAPIView):
     queryset = Writer.objects.all().select_related('writermedia').prefetch_related('writermedia__media_files')
     serializer_class = WriterSerializer 
     permission_classes = [IsAdminOrReadOnly]
-    pagination_class = [GlobalPagination]
+    pagination_class = GlobalPagination
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
@@ -69,6 +69,7 @@ class WriterCoreDetail_ListCreate_View(generics.ListCreateAPIView):
     queryset = WriterCoreDetail.objects.select_related('writer')
     serializer_class = WriterCoreDetailSerializer 
     permission_classes = [IsAdminOrReadOnly]
+    pagination_class = GlobalPagination
 
 
 

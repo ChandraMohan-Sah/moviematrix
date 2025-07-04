@@ -191,7 +191,7 @@ class MovieVotes(models.Model):
         ('funny', 'Funny'),
         ('excited', 'Excited'),
     ]
-
+ 
     user_vote = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="votes")
     vote_type = models.CharField(max_length=20, choices = VOTE_CHOICES)
