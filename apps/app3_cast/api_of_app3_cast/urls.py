@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+ 
 urlpatterns = [
     # CAST
     path('casts/', views.Cast_ListCreate_View.as_view(), name='cast-create-list'),
@@ -15,4 +15,4 @@ urlpatterns = [
     # path('casts/known-for/', views.CastKnownForCreateView.as_view(), name='cast-knownfor-create'),
     # path('casts/known-for/list/', views.CastKnownForListView.as_view(), name='cast-knownfor-list'),
 ]
- 
+  

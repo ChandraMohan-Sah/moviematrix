@@ -30,3 +30,4 @@ def users_stars_preferences(user_id):
     pass
 
 
+ 

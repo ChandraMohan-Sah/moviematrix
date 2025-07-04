@@ -76,6 +76,9 @@ urlpatterns = [
 
    #browsable login 
    path('api-auth/', include('rest_framework.urls')),
+
+   #sphinex documentation
+   path('docs/', include('docs.urls')),
 ]
 
 

@@ -20,7 +20,7 @@ from django.db import models
 '''IMDB Originals'''
 # collect - is_original=True (random function )
 
-
+ 
 '''Prime Video'''
 # collect platform = prime (random function)
 

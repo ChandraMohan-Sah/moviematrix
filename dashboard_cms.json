@@ -1,148 +1,48 @@
-[
-  {
-    "profile": null,
-    "movie_watchlist": [],
-    "tvshow_watchlist": [
-      {
-        "id": 3,
-        "tvshow": {
-          "id": 1,
-          "tvshowmedia": "tenali-rama",
-          "title": "Tenali Rama",
-          "banners": [],
-          "thumbnails": [],
-          "trailers": [],
-          "related_pic": [],
-          "tvshow_genre": [
-            "Adventure"
-          ],
-          "platform": "Amazon Prime",
-          "tvshow_cast": [
-            "Hari Bahadur",
-            "Ram Shankar Sharan"
-          ],
-          "tvshow_creator": [
-            "creator-1"
-          ],
-          "tvshow_writer": [
-            "cms"
-          ]
-        },
-        "user_watchlist": "cms",
-        "added_at": "2025-06-26T08:59:58.227334Z",
-        "removed_at": "2025-06-26T08:59:58.227400Z"
-      }
-    ],
-    "episode_watchlist": [],
-    "movie_viewed": [],
-    "tvshow_viewed": [],
-    "episode_viewed": [
-      {
-        "id": 2,
-        "episode": {
-          "id": 13,
-          "title": "Tenali Rama Ep-1",
-          "episode_number": 1,
-          "tvshow": "Tenali Rama",
-          "season": 1,
-          "thumbnails": [
-            {
-              "id": 17,
-              "media_type": "thumbnail",
-              "file": null,
-              "cdn_url": "https://images.unsplash.com/photo-1749741340022-434e924e8312?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "uploaded_at": "2025-06-28T04:23:07.257394Z"
-            }
-          ],
-          "videos": [
-            {
-              "id": 18,
-              "media_type": "video",
-              "file": null,
-              "cdn_url": "https://images.unsplash.com/photo-1749741340022-434e924e8312?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "uploaded_at": "2025-06-28T04:23:07.269404Z"
-            }
-          ],
-          "episode_created": "2025-06-28T04:30:04.834011Z",
-          "episode_updated": "2025-06-28T04:30:04.834080Z"
-        },
-        "user_viewed": "cms",
-        "viewed_at": "2025-06-28T06:40:22.958564Z",
-        "removed_at": "2025-06-28T06:40:22.958614Z"
-      }
-    ],
-    "movie_ratings_reviews": [],
-    "tvshow_rating_reviews": [
-      {
-        "id": 1,
-        "tvshow": {
-          "id": 1,
-          "tvshowmedia": "tenali-rama",
-          "title": "Tenali Rama",
-          "banners": [],
-          "thumbnails": [],
-          "trailers": [],
-          "related_pic": [],
-          "tvshow_genre": [
-            "Adventure"
-          ],
-          "platform": "Amazon Prime",
-          "tvshow_cast": [
-            "Hari Bahadur",
-            "Ram Shankar Sharan"
-          ],
-          "tvshow_creator": [
-            "creator-1"
-          ],
-          "tvshow_writer": [
-            "cms"
-          ]
-        },
-        "user_tvshow_review": "cms",
-        "rating": 10,
-        "review": "Nice Show",
-        "active": true,
-        "created": "2025-06-26T08:12:50.063502Z",
-        "updated": "2025-06-26T08:12:50.063546Z"
-      }
-    ],
-    "episode_rating_reviews": [
-      {
-        "id": 1,
-        "episode": {
-          "id": 13,
-          "title": "Tenali Rama Ep-1",
-          "episode_number": 1,
-          "tvshow": "Tenali Rama",
-          "season": 1,
-          "thumbnails": [
-            {
-              "id": 17,
-              "media_type": "thumbnail",
-              "file": null,
-              "cdn_url": "https://images.unsplash.com/photo-1749741340022-434e924e8312?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "uploaded_at": "2025-06-28T04:23:07.257394Z"
-            }
-          ],
-          "videos": [
-            {
-              "id": 18,
-              "media_type": "video",
-              "file": null,
-              "cdn_url": "https://images.unsplash.com/photo-1749741340022-434e924e8312?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "uploaded_at": "2025-06-28T04:23:07.269404Z"
-            }
-          ],
-          "episode_created": "2025-06-28T04:30:04.834011Z",
-          "episode_updated": "2025-06-28T04:30:04.834080Z"
-        },
-        "user_episode_review": "cms",
-        "rating": 10,
-        "review": "Nice Episode Loved It",
-        "active": true,
-        "created": "2025-06-28T07:06:32.043922Z",
-        "updated": "2025-06-28T07:06:32.043966Z"
-      }
-    ]
-  }
-]
+{
+  "id": 1,
+  "moviemedia": "nadiya-ka-paar",
+  "title": "Nadiya Ka Paar",
+  "banners": [
+    {
+      "id": 1,
+      "media_type": "banner",
+      "file": null,
+      "cdn_url": "https://plus.unsplash.com/premium_photo-1750891220483-4288ebf980a5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "uploaded_at": "2025-07-03T04:24:25.014868Z"
+    }
+  ],
+  "thumbnails": [
+    {
+      "id": 2,
+      "media_type": "thumbnail",
+      "file": null,
+      "cdn_url": "https://plus.unsplash.com/premium_photo-1750891220483-4288ebf980a5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "uploaded_at": "2025-07-03T04:24:25.015447Z"
+    }
+  ],
+  "video": [
+    {
+      "id": 4,
+      "media_type": "video",
+      "file": null,
+      "cdn_url": "https://plus.unsplash.com/premium_photo-1750891220483-4288ebf980a5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "uploaded_at": "2025-07-03T04:24:25.016209Z"
+    }
+  ],
+  "related_pic": [
+    {
+      "id": 5,
+      "media_type": "related_pic",
+      "file": null,
+      "cdn_url": "https://plus.unsplash.com/premium_photo-1750891220483-4288ebf980a5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "uploaded_at": "2025-07-03T04:24:25.016525Z"
+    }
+  ],
+  "movie_genre": ["Hari Bahadur"],
+  "platform": "Netflix",
+  "movie_cast": ["Hritik Roshan"],
+  "movie_creator": ["Radha Krishna"],
+  "movie_writer": ["ROshan the Writer"],
+  "movie_created": "2025-07-03T04:24:25.092375Z",
+  "movie_updated": "2025-07-03T04:24:25.092416Z"
+}

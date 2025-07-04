@@ -8,3 +8,4 @@ def user_activity(user_id):
     # fetch recently viewed episodes (to recommend next episdoe continued ...)
     # fetch recently viewed casts
     pass
+ 

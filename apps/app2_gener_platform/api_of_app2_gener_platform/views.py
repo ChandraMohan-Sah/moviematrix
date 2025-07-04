@@ -25,7 +25,7 @@ from django.utils.decorators import method_decorator
     tags=['App2 : Genre APIs'], operation_id='fetch all genre',
     operation_description='fetch genre',
 ))
-class GenreList(generics.ListCreateAPIView):
+class GenreCreateList(generics.ListCreateAPIView):
     queryset = Genre.objects.all() 
     serializer_class = GenreSerializer 
 
@@ -60,7 +60,7 @@ class GenreDetail(generics.RetrieveUpdateDestroyAPIView):
     tags=['App2 : Platform APIs'], operation_id='fetch all platform',
     operation_description='fetch all platform',
 ))
-class PlatformList(generics.ListCreateAPIView):
+class PlatformListCreate(generics.ListCreateAPIView):
     queryset = Platform.objects.all() 
     serializer_class = PlatformSerializer
 

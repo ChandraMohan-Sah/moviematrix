@@ -25,7 +25,8 @@ class CastSerializer(serializers.ModelSerializer):
     # castmedia = serializers.PrimaryKeyRelatedField(queryset=CastMedia.objects.all(), write_only=True)
     castmedia = serializers.SlugRelatedField(
         slug_field='name',              # Match using `name` instead of ID
-        queryset=CastMedia.objects.all()
+        queryset=CastMedia.objects.all(),
+        write_only=True
     )
 
     class Meta:

@@ -53,7 +53,10 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     #authentication
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+
+    # Django Documentation
+    'docs',
     
 ]
 
@@ -138,3 +141,6 @@ SWAGGER_SETTINGS = {
 
 
 
+# Sphinix Documentaion Configuration
+DOCS_ROOT = os.path.join(BASE_DIR, '../docs/_build/html')
+DOCS_ACCESS = 'staff'

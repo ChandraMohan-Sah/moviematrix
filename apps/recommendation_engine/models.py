@@ -1,7 +1,7 @@
 from django.db import models
 
 
-
+ 
 
 '''Personalized Movie Recommendation'''
 def personalized_movie_recommendation(user_id):

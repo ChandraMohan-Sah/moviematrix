@@ -1,6 +1,6 @@
 from django.db import models
 from app1_media_manger.models import CastMedia
-
+ 
 class Cast(models.Model):
     """Main movie model in app6 with media integration"""
     castmedia = models.OneToOneField(

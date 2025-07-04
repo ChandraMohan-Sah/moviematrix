@@ -10,7 +10,7 @@ from app3_cast.models import Cast
 from app4_creator.models import Creator 
 from app5_writer.models import Writer
 
-
+ 
 '''
     Notes:
         - duration : This movie is 120 minutes long.
