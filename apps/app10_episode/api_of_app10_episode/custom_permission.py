@@ -54,14 +54,14 @@ class IsUserEpisodeWatchlist_OrReadOnly(permissions.BasePermission):
 
     
 class IsAdminOrUserWatchlistedEpisode(permissions.BasePermission):
-    def has_permission(self, request, view):
+    def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             # Check permissions for read-only request
-            return True  # Allow read-only methods for all users
+            return obj.user_watchlist == request.user  # Allow read-only methods to the user who watchlisted 
         
         else:
             # Check permissions for write request
-            return request.user_watchlist or request.user.is_staff  # Allow write methods : for admin + particular users
+            return obj.user_watchlist == request.user or request.user.is_staff # Allow write methods : for admin + particular users
     
 
 
@@ -78,12 +78,12 @@ class IsUserViewedEpisode_OrReadOnly(permissions.BasePermission):
     
 
 class IsAdminOrUserViewedEpisode(permissions.BasePermission):
-    def has_permission(self, request, view):
+    def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             # Check permissions for read-only request
-            return True  # Allow read-only methods for all users
+            return obj.user_viewed == request.user # Allow read-only methods for the user who viewed
         
         else:
             # Check permissions for write request
-            return request.user_viewed or request.user.is_staff  # Allow write methods : for admin + particular users
+            return obj.user_viewed ==  request.user or request.user.is_staff  # Allow write methods : for admin + particular users
     

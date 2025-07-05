@@ -123,6 +123,7 @@ class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
 )) 
 class UserEpisodeWatchlistToggleView(generics.CreateAPIView):
     serializer_class = UserEpisodeWatchlistSerializer
+    permission_classes = []
 
     def create(self, request, *args, **kwargs):
         user = request.data.get('user_id')
