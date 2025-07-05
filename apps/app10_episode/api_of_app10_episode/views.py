@@ -107,8 +107,8 @@ class EpisodeGeneralDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode Watchlist APIs'], operation_id='list all episode watchlist',
-    operation_description='list all episode watchlist',
+    tags=['App10 : Episode Watchlist APIs'], operation_id='list all episode watchlist [IsAdminOrUserWatchlistedEpisode]',
+    operation_description='list all episode watchlist [IsAdminOrUserWatchlistedEpisode]',
 ))
 class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
     queryset = EpisodeWatchlist.objects.all().select_related('episode')
@@ -118,12 +118,12 @@ class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode Watchlist APIs'], operation_id='create a user watchlist',
-    operation_description='create a user watchlist',
+    tags=['App10 : Episode Watchlist APIs'], operation_id='create a user watchlist [IsUserEpisodeWatchlist_OrReadOnly]',
+    operation_description='create a user watchlist [IsUserEpisodeWatchlist_OrReadOnly]',
 )) 
 class UserEpisodeWatchlistToggleView(generics.CreateAPIView):
     serializer_class = UserEpisodeWatchlistSerializer
-    permission_classes = []
+    permission_classes = [IsUserEpisodeWatchlist_OrReadOnly]
 
     def create(self, request, *args, **kwargs):
         user = request.data.get('user_id')
@@ -151,21 +151,23 @@ class UserEpisodeWatchlistToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Users Episode Viewing History APIs'], operation_id='see what user viewed',
-    operation_description='see what user viewed',
+    tags=['App10 : Users Episode Viewing History APIs'], operation_id='see what user viewed [IsAdminOrUserViewedEpisode]',
+    operation_description='see what user viewed [IsAdminOrUserViewedEpisode]',
 ))
 class EpisodeUserViewed_LC_View(generics.ListAPIView):
     queryset = EpisodeViewed.objects.all().select_related('episode')
     serializer_class = UserEpisodeViewedSerializer
+    permission_classes = [IsAdminOrUserViewedEpisode]
 
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Users Episode Viewing History APIs'], operation_id='make an episode as viewed',
-    operation_description='make an episode as viewed',
+    tags=['App10 : Users Episode Viewing History APIs'], operation_id='make an episode as viewed [IsUserViewedEpisode_OrReadOnly]',
+    operation_description='make an episode as viewed [IsUserViewedEpisode_OrReadOnly]',
 )) 
 class UserEpisodeViewedToggleView(generics.CreateAPIView):
     serializer_class = UserEpisodeViewedSerializer
+    permission_classes = [IsUserViewedEpisode_OrReadOnly]
 
     def create(self, request, *args, **kwargs):
         user = request.data.get('user_id')
@@ -192,22 +194,24 @@ class UserEpisodeViewedToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode User Votes APIs'], operation_id='list all episode votes',
-    operation_description='list all episode votes', 
+    tags=['App10 : Episode User Votes APIs'], operation_id='list all episode votes [AllowAny]',
+    operation_description='list all episode votes [AllowAny]', 
 ))
 class EpisodeVotes_List_View(generics.ListAPIView):
     queryset = EpisodeVotes.objects.all().select_related('episode')
     serializer_class = EpisodeVotesSerializer
+   
 
 
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode User Votes APIs'], operation_id='give vote on an episode',
-    operation_description='give vote on an episode',
+    tags=['App10 : Episode User Votes APIs'], operation_id='give vote on an episode [IsEpisodeVoter_OrReadOnly]',
+    operation_description='give vote on an episode [IsEpisodeVoter_OrReadOnly]',
 )) 
 class EpisodeVotesToggleView(generics.CreateAPIView):
     serializer_class = EpisodeVotesSerializer
+    permission_classes = [IsEpisodeVoter_OrReadOnly]
 
     def create(self, request, *args, **kwargs):
         user = request.data.get('user_id')
@@ -228,33 +232,42 @@ class EpisodeVotesToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='list episode rating and review',
-    operation_description='list episode rating and review', 
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='list episode rating and review [AllowAny] [Paginate-10]',
+    operation_description='list episode rating and review [AllowAny] [Paginate-10]', 
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='create an episode rating and review',
-    operation_description='create an episode rating and review', 
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='create an episode rating and review [IsAuthenticated]',
+    operation_description='create an episode rating and review [IsAuthenticated]', 
 ))
 class EpisodeRatingReview_LC_View(generics.ListCreateAPIView):
     queryset = EpisodeRatingReview.objects.all().select_related('episode')
     serializer_class = EpisodeRatingReviewSerializer
+    pagination_class = GlobalPagination
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return [permissions.AllowAny]
+        elif self.request.method == "POST":
+            return [permissions.IsAuthenticated]
+        return super().get_permissions()
 
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='retrieve particular episode rating and review',
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='retrieve particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='update particular episode rating and review',
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='update particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='patch particular episode rating and review',
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='patch particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='delete particular episode rating and review',
+    tags=['App10 : EpisodeRatingReview APIs'], operation_id='delete particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 class EpisodeRatingReview_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = EpisodeRatingReview.objects.all().select_related('episode')
     serializer_class = EpisodeRatingReviewSerializer
+    permission_classes = [IsEpisodeReviewer_OrReadOnly]
 
 

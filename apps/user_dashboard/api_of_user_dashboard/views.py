@@ -5,8 +5,8 @@ from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['User Dashboard'], operation_id='fetch all user information',
-    operation_description='fetch all user information',
+    tags=['User Dashboard'], operation_id='fetch my dashboard [IsAuthenticated]',
+    operation_description='fetch my dashboard [IsAuthenticated]',
 ))
 class UserDashboardView(generics.RetrieveAPIView):
     serializer_class = UserDashboardSerializer

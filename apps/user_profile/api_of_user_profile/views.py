@@ -12,12 +12,12 @@ from django.utils.decorators import method_decorator
 
 
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['User Profile'], operation_id='update user profile pic',
-    operation_description='update user profile pic', 
+    tags=['User Profile'], operation_id='update user profile pic [IsAuthenticated]',
+    operation_description='update user profile pic [IsAuthenticated]', 
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['User Profile'], operation_id='update user profile pci',
-    operation_description='update user profile pic', 
+    tags=['User Profile'], operation_id='update user profile pic [IsAuthenticated]',
+    operation_description='update user profile pic [IsAuthenticated]', 
 ))
 class UserProfileUpdateView(generics.UpdateAPIView):
     serializer_class = UserProfileSerializer 
@@ -30,10 +30,10 @@ class UserProfileUpdateView(generics.UpdateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['User Profile'], operation_id='fetch user profile information',
-    operation_description='fetch user profile information', 
+    tags=['User Profile'], operation_id='fetch all users information [IsAdminUser]',
+    operation_description='fetch all users information [IsAdminUser]', 
 ))
-class UserProfileInfoView(generics.ListAPIView):
+class FetchAllUserProfileInfo_View(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = CompleteUserProfileInfoSerializer
     permission_classes = [permissions.IsAdminUser]
