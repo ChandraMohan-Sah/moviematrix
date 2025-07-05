@@ -35,7 +35,7 @@ class IsMovieVoter_OrReadOnly(permissions.BasePermission):
             # Allow read-only methods for all users
             return True
         else:
-            # Allow write methods only for the user who created the review
+            # Allow write methods only for the user who voted
             return obj.user_vote == request.user
     
 
@@ -47,7 +47,7 @@ class IsUserMovieWatchlist_OrReadOnly(permissions.BasePermission):
             # Allow read-only methods for all users
             return True
         else:
-            # Allow write methods only for the user who created the review
+            # Allow write methods only for the user who watchlisted
             return obj.user_watchlist == request.user
 
 
@@ -61,7 +61,7 @@ class IsAdminOrUserWatchlistedMovie(permissions.BasePermission):
         
         else:
             # Check permissions for write request
-            return request.user_watchlist and request.user.is_staff  # Allow write methods only for admin users
+            return request.user_watchlist or request.user.is_staff   # Allow write methods : for admin + particular users
     
 
 
@@ -73,7 +73,7 @@ class IsUserViewedMovie_OrReadOnly(permissions.BasePermission):
             # Allow read-only methods for all users
             return True
         else:
-            # Allow write methods only for the user who created the review
+            # Allow write methods only for the user who viewed the review
             return obj.user_viewed == request.user
     
 
@@ -85,5 +85,5 @@ class IsAdminOrUserViewedMovie(permissions.BasePermission):
         
         else:
             # Check permissions for write request
-            return request.user_viewed and request.user.is_staff  # Allow write methods only for admin users
+            return request.user_viewed or request.user.is_staff   # Allow write methods : for admin + particular users
     

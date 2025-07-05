@@ -16,69 +16,91 @@ from app10_episode.api_of_app10_episode.serializers import (
 from drf_yasg.utils import swagger_auto_schema 
 from django.utils.decorators import method_decorator 
 
+# permissions
+from shared.permissions import IsAdminOrReadOnly
+from rest_framework import permissions
+from .custom_permission import (
+    IsEpisodeReviewer_OrReadOnly, IsEpisodeVoter_OrReadOnly, 
+    IsUserEpisodeWatchlist_OrReadOnly, IsAdminOrUserWatchlistedEpisode, 
+    IsUserViewedEpisode_OrReadOnly, IsAdminOrUserViewedEpisode
+)
+
+# pagination 
+from shared.pagination import GlobalPagination
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='list all episode available',
-    operation_description='list all episode available',
+    tags=['App10 : Episode APIs'], operation_id='list all episode available [AllowAny] [Paginate-10]',
+    operation_description='list all episode available [AllowAny] [Paginate-10]',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='create an episode',
-    operation_description='create an episode',
+    tags=['App10 : Episode APIs'], operation_id='create an episode [IsAdminUser]',
+    operation_description='create an episode [IsAdminUser]',
 )) 
 class Episode_LC_View(generics.ListCreateAPIView):
     queryset = Episode.objects.all().select_related('episodemedia').prefetch_related('episodemedia__media_files')
     serializer_class = EpisodeSerializer
+    pagination_class = GlobalPagination
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return [permissions.AllowAny]
+        elif self.request.method == "POST":
+            return [permissions.IsAdminUser]
+        return super().get_permissions()
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='retrieve particular episode detail',
+    tags=['App10 : Episode APIs'], operation_id='retrieve particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='update particular episode detail',
+    tags=['App10 : Episode APIs'], operation_id='update particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='patch particular episode detail',
+    tags=['App10 : Episode APIs'], operation_id='patch particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='delete particular episode detail',
+    tags=['App10 : Episode APIs'], operation_id='delete particular episode detail [IsAdminOrReadOnly]',
 ))
 class Episode_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = Episode.objects.all().select_related('episodemedia').prefetch_related('episodemedia__media_files')
     serializer_class = EpisodeSerializer 
+    permission_classes = [IsAdminOrReadOnly]
 
 
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='list all episode general detail',
-    operation_description='list all episode general detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='list all episode general detail [IsAdminOrReadOnly]',
+    operation_description='list all episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='create an episode general detail',
-    operation_description='create an episode general detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='create an episode general detail [IsAdminOrReadOnly]',
+    operation_description='create an episode general detail [IsAdminOrReadOnly]',
 )) 
 class EpisodeGeneralDetail_LC_View(generics.ListCreateAPIView):
     queryset = EpisodeGeneralDetail.objects.all().select_related('episode')
     serializer_class = EpisodeGeneralDetailSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='retrieve particular episode general detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='retrieve particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='update particular episode general detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='update particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='patch particular episode general detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='patch particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='delete particular episode general  detail',
+    tags=['App10 : Episode General Detail APIs'], operation_id='delete particular episode general  detail [IsAdminOrReadOnly]',
 ))
 class EpisodeGeneralDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = EpisodeGeneralDetail.objects.all().select_related('episode')
     serializer_class = EpisodeGeneralDetailSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
  
 
@@ -91,6 +113,7 @@ class EpisodeGeneralDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
 class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
     queryset = EpisodeWatchlist.objects.all().select_related('episode')
     serializer_class = UserEpisodeWatchlistSerializer
+    permission_classes= [IsAdminOrUserWatchlistedEpisode]
 
 
 

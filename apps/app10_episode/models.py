@@ -14,7 +14,7 @@ class Episode(models.Model):
         related_name='app10_episode'
     ) 
  
-    @property 
+    @property  
     def episode_title(self): 
         return self.episodemedia.title 
     
