@@ -220,8 +220,8 @@ class MovieTechSpecs_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     operation_description='list all movie review [AllowAny] [Paginate-10]',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App6 : MovieRatingReview APIs'], operation_id='create a movie review [IsMovieReviewer_OrReadOnly]',
-    operation_description='create a movie review [IsMovieReviewer_OrReadOnly]',
+    tags=['App6 : MovieRatingReview APIs'], operation_id='create a movie review [IsAuthenticated]',
+    operation_description='create a movie review [IsAuthenticated]',
 ))  
 class MovieRatingReview_LC_View(generics.ListCreateAPIView):
     queryset = MovieRatingReview.objects.all().select_related('movie')
@@ -232,7 +232,7 @@ class MovieRatingReview_LC_View(generics.ListCreateAPIView):
         if self.request.method == 'GET':
             return [permissions.AllowAny]  # Anyone can view
         elif self.request.method == 'POST':
-            return [IsMovieReviewer_OrReadOnly]  # Custom permission
+            return [permissions.IsAuthenticated]  # Custom permission
         return super().get_permissions()
 
 

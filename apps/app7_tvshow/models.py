@@ -12,6 +12,7 @@ from django.contrib.auth.models import User # gives custom user selection
 
 from django.core.validators import MinValueValidator, MaxValueValidator
  
+ 
 
 # Create your models here.
 class TvShow(models.Model):
