@@ -108,5 +108,12 @@
       "id": 6,
       "writer_name": "Lalu Jadhav Writer"
     }
-  ]
+  ],
+  "languages": [
+    {
+      "id": 1,
+      "language": "English"
+    }
+  ],
+  "production_companies": []
 }
