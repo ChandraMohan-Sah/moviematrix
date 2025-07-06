@@ -66,6 +66,7 @@ class CreatorCoreDetail_ListCreate_View(generics.ListCreateAPIView):
     queryset = CreatorCoreDetail.objects.select_related('creator')
     serializer_class = CreatorCoreDetailSerializer
     permission_classes = [IsAdminOrReadOnly]
+    pagination_class = GlobalPagination
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(

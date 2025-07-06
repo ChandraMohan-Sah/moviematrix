@@ -1,0 +1,80 @@
+[
+  {
+    "creator": {
+      "creatormedia": "Ram Joshi Creator"
+    },
+    "creator_id": 1,
+    "height": "5 ft 9 in",
+    "born_date": "1974-05-20",
+    "death_date": "",
+    "spouses": ["Sita Joshi"],
+    "children": ["Nabin Joshi", "Kabita Joshi"],
+    "relatives": ["Raju Joshi"],
+    "otherwork": ["Writer", "Poet"]
+  },
+  {
+    "creator": {
+      "creatormedia": "Sita Sharma Creator"
+    },
+    "creator_id": 2,
+    "height": "5 ft 4 in",
+    "born_date": "1982-11-15",
+    "death_date": "",
+    "spouses": ["Dinesh Sharma"],
+    "children": ["Sneha Sharma"],
+    "relatives": ["Minu Sharma"],
+    "otherwork": ["Director", "Editor"]
+  },
+  {
+    "creator": {
+      "creatormedia": "Hari Neupane Creator"
+    },
+    "creator_id": 3,
+    "height": "5 ft 11 in",
+    "born_date": "1960-02-10",
+    "death_date": "2020-09-01",
+    "spouses": ["Rita Neupane"],
+    "children": ["Sujan Neupane"],
+    "relatives": [],
+    "otherwork": ["Producer", "Screenwriter"]
+  },
+  {
+    "creator": {
+      "creatormedia": "Gita Basnet Creator"
+    },
+    "creator_id": 4,
+    "height": "5 ft 6 in",
+    "born_date": "1990-08-30",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": ["Sanjay Basnet"],
+    "otherwork": ["Lyricist", "Vocalist"]
+  },
+  {
+    "creator": {
+      "creatormedia": "Bikash Thapa Creator"
+    },
+    "creator_id": 5,
+    "height": "6 ft 0 in",
+    "born_date": "1987-03-18",
+    "death_date": "",
+    "spouses": ["Anju Thapa"],
+    "children": ["Aayush Thapa"],
+    "relatives": [],
+    "otherwork": ["Cinematographer", "Story Developer"]
+  },
+  {
+    "creator": {
+      "creatormedia": "Lalu Jadhav Creator"
+    },
+    "creator_id": 6,
+    "height": "5 ft 7 in",
+    "born_date": "1970-07-10",
+    "death_date": "",
+    "spouses": ["Rama Jadhav"],
+    "children": ["Kiran Jadhav", "Reema Jadhav"],
+    "relatives": ["Devendra Jadhav"],
+    "otherwork": ["Editor", "Composer"]
+  }
+]

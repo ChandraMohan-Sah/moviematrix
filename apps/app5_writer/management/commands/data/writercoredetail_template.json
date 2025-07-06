@@ -1,0 +1,80 @@
+[
+  {
+    "writer": {
+      "writermedia": "Ram Joshi Writer"
+    },
+    "writer_id": 1,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  },
+  {
+    "writer": {
+      "writermedia": "Sita Sharma Writer"
+    },
+    "writer_id": 2,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  },
+  {
+    "writer": {
+      "writermedia": "Hari Neupane Writer"
+    },
+    "writer_id": 3,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  },
+  {
+    "writer": {
+      "writermedia": "Gita Basnet Writer"
+    },
+    "writer_id": 4,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  },
+  {
+    "writer": {
+      "writermedia": "Bikash Thapa Writer"
+    },
+    "writer_id": 5,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  },
+  {
+    "writer": {
+      "writermedia": "Lalu Jadhav Writer"
+    },
+    "writer_id": 6,
+    "height": "",
+    "born_date": "",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": [],
+    "otherwork": []
+  }
+]

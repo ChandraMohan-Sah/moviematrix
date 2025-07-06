@@ -1,0 +1,80 @@
+[
+  {
+    "writer": {
+      "writermedia": "Ram Joshi Writer"
+    },
+    "writer_id": 1,
+    "height": "5 ft 8 in",
+    "born_date": "1970-03-12",
+    "death_date": "",
+    "spouses": ["Lila Joshi"],
+    "children": ["Suresh Joshi", "Neha Joshi"],
+    "relatives": ["Amit Joshi"],
+    "otherwork": ["Poet", "Editor"]
+  },
+  {
+    "writer": {
+      "writermedia": "Sita Sharma Writer"
+    },
+    "writer_id": 2,
+    "height": "5 ft 5 in",
+    "born_date": "1985-06-21",
+    "death_date": "",
+    "spouses": ["Keshav Sharma"],
+    "children": ["Manju Sharma"],
+    "relatives": [],
+    "otherwork": ["Screenwriter", "Lyricist"]
+  },
+  {
+    "writer": {
+      "writermedia": "Hari Neupane Writer"
+    },
+    "writer_id": 3,
+    "height": "5 ft 11 in",
+    "born_date": "1962-09-05",
+    "death_date": "2019-12-31",
+    "spouses": ["Bindu Neupane"],
+    "children": ["Raj Neupane"],
+    "relatives": ["Dilip Neupane"],
+    "otherwork": ["Journalist", "Columnist"]
+  },
+  {
+    "writer": {
+      "writermedia": "Gita Basnet Writer"
+    },
+    "writer_id": 4,
+    "height": "5 ft 6 in",
+    "born_date": "1992-10-10",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": ["Ramesh Basnet"],
+    "otherwork": ["Script Editor", "Blogger"]
+  },
+  {
+    "writer": {
+      "writermedia": "Bikash Thapa Writer"
+    },
+    "writer_id": 5,
+    "height": "5 ft 10 in",
+    "born_date": "1980-01-18",
+    "death_date": "",
+    "spouses": ["Shanti Thapa"],
+    "children": ["Aarav Thapa"],
+    "relatives": [],
+    "otherwork": ["Author", "Dialogue Writer"]
+  },
+  {
+    "writer": {
+      "writermedia": "Lalu Jadhav Writer"
+    },
+    "writer_id": 6,
+    "height": "5 ft 7 in",
+    "born_date": "1975-04-02",
+    "death_date": "",
+    "spouses": ["Rita Jadhav"],
+    "children": ["Kritika Jadhav", "Sumit Jadhav"],
+    "relatives": ["Sunil Jadhav"],
+    "otherwork": ["Biographer", "Researcher"]
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "cast": {
+      "castmedia": "Ram Joshi"
+    },
+    "cast_id": 1,
+    "height": "5 ft 9 in",
+    "born_date": "1975-04-12",
+    "death_date": "",
+    "spouses": ["Meera Joshi"],
+    "children": ["Ravi Joshi", "Nisha Joshi"],
+    "relatives": ["Anil Joshi"],
+    "otherwork": ["Director", "Scriptwriter"]
+  },
+  {
+    "cast": {
+      "castmedia": "Sita Sharma"
+    },
+    "cast_id": 2,
+    "height": "5 ft 5 in",
+    "born_date": "1980-09-22",
+    "death_date": "",
+    "spouses": [],
+    "children": ["Rekha Sharma"],
+    "relatives": ["Gopal Sharma"],
+    "otherwork": ["Producer", "Author"]
+  },
+  {
+    "cast": {
+      "castmedia": "Hari Neupane"
+    },
+    "cast_id": 3,
+    "height": "6 ft 0 in",
+    "born_date": "1965-01-10",
+    "death_date": "2020-06-15",
+    "spouses": ["Shanta Neupane"],
+    "children": ["Binay Neupane"],
+    "relatives": ["Kamal Neupane"],
+    "otherwork": ["Poet", "Journalist"]
+  },
+  {
+    "cast": {
+      "castmedia": "Gita Basnet"
+    },
+    "cast_id": 4,
+    "height": "5 ft 6 in",
+    "born_date": "1988-03-08",
+    "death_date": "",
+    "spouses": [],
+    "children": [],
+    "relatives": ["Sujata Basnet"],
+    "otherwork": ["Singer", "Composer"]
+  },
+  {
+    "cast": {
+      "castmedia": "Bikash Thapa"
+    },
+    "cast_id": 5,
+    "height": "5 ft 11 in",
+    "born_date": "1990-12-01",
+    "death_date": "",
+    "spouses": ["Anita Thapa"],
+    "children": ["Sagar Thapa"],
+    "relatives": [],
+    "otherwork": ["Actor", "Choreographer"]
+  },
+  {
+    "cast": {
+      "castmedia": "Lalu Jadhav"
+    },
+    "cast_id": 6,
+    "height": "5 ft 7 in",
+    "born_date": "1972-07-19",
+    "death_date": "",
+    "spouses": ["Sunita Jadhav"],
+    "children": ["Milan Jadhav", "Rina Jadhav"],
+    "relatives": ["Keshav Jadhav"],
+    "otherwork": ["Story Writer", "Editor"]
+  }
+]
