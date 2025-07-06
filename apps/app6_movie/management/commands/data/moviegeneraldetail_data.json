@@ -1,0 +1,11 @@
+[
+  {
+    "movie_id": 1,
+    "active": true,
+    "is_original": true,
+    "duration": 120,
+    "avg_rating": 4.5,
+    "number_rating": 100,
+    "storyline": "This is the story of movie 1."
+  }
+]

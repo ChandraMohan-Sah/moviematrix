@@ -1,0 +1,11 @@
+[
+  {
+    "movie_id": 1,
+    "release_date": "2023-05-01",
+    "country_of_origin": "USA",
+    "also_known_as": "River Tales",
+    "filming_location": "New York, USA",
+    "language_ids": [1, 2],
+    "production_company_ids": [1]
+  }
+]

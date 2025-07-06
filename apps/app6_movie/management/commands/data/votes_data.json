@@ -1,0 +1,12 @@
+[
+  {
+    "user_id": 1,
+    "movie_id": 1,
+    "vote_type": "love"
+  },
+  {
+    "user_id": 2,
+    "movie_id": 2,
+    "vote_type": "funny"
+  }
+]

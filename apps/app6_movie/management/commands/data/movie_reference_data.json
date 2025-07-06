@@ -1,0 +1,112 @@
+{
+  "genres": [
+    {
+      "id": 1,
+      "name": "Action"
+    },
+    {
+      "id": 2,
+      "name": "Drama"
+    },
+    {
+      "id": 3,
+      "name": "Thriller"
+    },
+    {
+      "id": 4,
+      "name": "Comedy"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 1,
+      "platform": "Netflix"
+    },
+    {
+      "id": 2,
+      "platform": "Amazon Prime"
+    },
+    {
+      "id": 3,
+      "platform": "Disney+"
+    }
+  ],
+  "casts": [
+    {
+      "id": 1,
+      "cast_name": "Ram Joshi"
+    },
+    {
+      "id": 2,
+      "cast_name": "Sita Sharma"
+    },
+    {
+      "id": 3,
+      "cast_name": "Hari Neupane"
+    },
+    {
+      "id": 4,
+      "cast_name": "Gita Basnet"
+    },
+    {
+      "id": 5,
+      "cast_name": "Bikash Thapa"
+    },
+    {
+      "id": 6,
+      "cast_name": "Lalu Jadhav"
+    }
+  ],
+  "creators": [
+    {
+      "id": 1,
+      "creator_name": "Ram Joshi Creator"
+    },
+    {
+      "id": 2,
+      "creator_name": "Sita Sharma Creator"
+    },
+    {
+      "id": 3,
+      "creator_name": "Hari Neupane Creator"
+    },
+    {
+      "id": 4,
+      "creator_name": "Gita Basnet Creator"
+    },
+    {
+      "id": 5,
+      "creator_name": "Bikash Thapa Creator"
+    },
+    {
+      "id": 6,
+      "creator_name": "Lalu Jadhav Creator"
+    }
+  ],
+  "writers": [
+    {
+      "id": 1,
+      "writer_name": "Ram Joshi Writer"
+    },
+    {
+      "id": 2,
+      "writer_name": "Sita Sharma Writer"
+    },
+    {
+      "id": 3,
+      "writer_name": "Hari Neupane Writer"
+    },
+    {
+      "id": 4,
+      "writer_name": "Gita Basnet Writer"
+    },
+    {
+      "id": 5,
+      "writer_name": "Bikash Thapa Writer"
+    },
+    {
+      "id": 6,
+      "writer_name": "Lalu Jadhav Writer"
+    }
+  ]
+}

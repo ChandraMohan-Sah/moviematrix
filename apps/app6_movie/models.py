@@ -89,19 +89,6 @@ class MovieGeneralDetail(models.Model):
         return f"{self.movie} with length {self.duration } is {self.active}."
 
 
-class MovieRatingReview(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE,related_name='movie_reviews')
-    user_movie_review = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_movie_review')
-    rating = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
-    review = models.CharField(max_length=200, blank=True)
-    active = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Movie: {self.movie.title} has - Rating: {self.rating}"
-    
-
 class MovieCoreDetail(models.Model):
     movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="movie_core_detail")
     release_date = models.DateField()
@@ -151,6 +138,20 @@ class MovieTechSpecs(models.Model):
 
     def __str__(self):
         return f"Tech Specification for: {self.movie.title}."
+
+
+class MovieRatingReview(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE,related_name='movie_reviews')
+    user_movie_review = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_movie_review')
+    rating = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
+    review = models.CharField(max_length=200, blank=True)
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Movie: {self.movie.title} has - Rating: {self.rating}"
+    
 
 
 class UserMovieWatchlist(models.Model):

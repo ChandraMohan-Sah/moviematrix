@@ -1,0 +1,11 @@
+[
+  {
+    "moviemedia": "war",
+    "movie_genre_ids": [1],
+    "platform_id": 1,
+    "movie_cast_ids": [1],
+    "movie_creator_ids": [1],
+    "movie_writer_ids": [1]
+  }
+]
+
