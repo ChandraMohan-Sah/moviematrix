@@ -1,0 +1,42 @@
+[
+  {
+    "tvshow": "tenali-rama",
+    "season_number": 1,
+    "banners": [
+      "https://images.unsplash.com/photo-1535392432937-a27c6d8d4dc6"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1550108575-ffb2f97854a1"
+    ]
+  },
+  {
+    "tvshow": "tenali-rama",
+    "season_number": 2,
+    "banners": [
+      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1605902711622-cfb43c44367b"
+    ]
+  },
+  {
+    "tvshow": "baalveer",
+    "season_number": 1,
+    "banners": [
+      "https://images.unsplash.com/photo-1581093588401-4bc81f3c8d0d"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1585241936939-2dd6c298a85f"
+    ]
+  },
+  {
+    "tvshow": "chhota-bheem",
+    "season_number": 1,
+    "banners": [
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1607746882042-944635dfe10e"
+    ]
+  }
+]

@@ -104,7 +104,7 @@ class EpisodeMedia(models.Model):
     def __str__(self):
         return f"{self.season.tvshow.name} - S{self.season.season_number}E{self.episode_number}: {self.title}"
 
-
+ 
 
 class MediaFile(models.Model):
     MEDIA_TYPE_CHOICES = [

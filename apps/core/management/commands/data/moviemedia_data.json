@@ -1,0 +1,57 @@
+[
+  {
+    "name": "War",
+    "banners": [
+      "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4",
+      "https://images.unsplash.com/photo-1601933471663-6e1b9f88e7be"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1526178613602-2e3a9d0c43b3"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1598899134739-d83e5ff8f030"
+    ]
+  },
+  {
+    "name": "Pathaan",
+    "banners": [
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1586281380392-3c0e05d16a0e"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1581092334513-03d3c7b3a585"
+    ]
+  },
+  {
+    "name": "Tamasha",
+    "banners": [
+      "https://images.unsplash.com/photo-1521335629791-ce4aec67dd47"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+    ]
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Tenali Rama",
+    "banners": [
+      "https://images.unsplash.com/photo-1549887534-4d6a2baf81b0"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_10mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1579105727228-54312f2d46c4"
+    ]
+  },
+  {
+    "name": "Baalveer",
+    "banners": [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_2mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_10mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1504386106331-3e4e71712b38"
+    ]
+  },
+  {
+    "name": "Chhota Bheem",
+    "banners": [
+      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24"
+    ],
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1559028012-481c04fa7023"
+    ],
+    "trailers": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    ],
+    "videos": [
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_10mb.mp4"
+    ],
+    "related_pics": [
+      "https://images.unsplash.com/photo-1532695979832-87b4be234c75"
+    ]
+  }
+]
