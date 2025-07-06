@@ -28,9 +28,9 @@ def logout_view(request):
 @swagger_auto_schema(
     method='post',
     request_body=RegistrationSerializer,  #  this is what enables the payload form
-    operation_description="Register a new user",
+    operation_description="👥 Register a new user",
     # operation_summary="User Registration",
-    tags=['User Registration '],
+    tags=['👥 User Registration '],
     responses={200: openapi.Response('Registration success')}
 )
 @api_view(['POST',])

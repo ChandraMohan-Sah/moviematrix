@@ -2,7 +2,7 @@
 from django.urls import path
 from . import views
 
-urlpatterns = [
+urlpatterns =  [
     # path('mediafile_list/', views.MediaFileList.as_view(), name='mediafile-list'),
     # path('mediafile_detail/<int:pk>/', views.MediaFileDetail.as_view(), name='mediafile-detail'),
 

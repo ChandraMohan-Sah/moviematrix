@@ -41,7 +41,7 @@ class Movie(models.Model):
     def title(self):
         return self.moviemedia.name
     
-    @property
+    @property 
     def trailer(self):
         return self.moviemedia.media_files.filter(media_type='trailer')
     

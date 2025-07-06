@@ -1,12 +1,19 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse 
+from django.contrib.auth import get_user_model
 
 
 # ------------ General Movie Information --------
 class Movie_TestCase(APITestCase):
 
     def setUp(self):
+         # ✅ Create and authenticate admin user
+        self.admin_user = get_user_model().objects.create_user(
+            username='admin', password='admin123', is_staff=True
+        )
+        self.client.force_authenticate(user=self.admin_user)
+
         self.moviemedia_creation_url = reverse('movie-media-create')
         self.castmedia_creation_url = reverse('cast-media-create')
         self.creatormedia_creation_url = reverse('creator-media-create')
@@ -143,7 +150,6 @@ class Movie_TestCase(APITestCase):
 
 
     def test_get_all_movie(self):
-        
         pass 
 
     def test_retrieve_particular_movie(self):

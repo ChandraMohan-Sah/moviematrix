@@ -30,7 +30,7 @@ class UserProfileUpdateView(generics.UpdateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['User Profile'], operation_id='fetch all users information [IsAdminUser]',
+    tags=['User Information'], operation_id='fetch all users information [IsAdminUser]',
     operation_description='fetch all users information [IsAdminUser]', 
 ))
 class FetchAllUserProfileInfo_View(generics.ListAPIView):

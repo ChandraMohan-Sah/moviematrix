@@ -17,7 +17,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
  
 
-'''
+''' 
     Notes : (serializer )
         - Translator: between Python models and JSON
         - Gatekeeper: validates what's allowed in and what's shown outside

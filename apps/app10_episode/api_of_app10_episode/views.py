@@ -30,11 +30,11 @@ from shared.pagination import GlobalPagination
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='list all episode available [AllowAny] [Paginate-10]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='list all episode available [AllowAny] [Paginate-10]',
     operation_description='list all episode available [AllowAny] [Paginate-10]',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='create an episode [IsAdminUser]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='create an episode [IsAdminUser]',
     operation_description='create an episode [IsAdminUser]',
 )) 
 class Episode_LC_View(generics.ListCreateAPIView):
@@ -51,16 +51,16 @@ class Episode_LC_View(generics.ListCreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='retrieve particular episode detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='retrieve particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='update particular episode detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='update particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='patch particular episode detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='patch particular episode detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : Episode APIs'], operation_id='delete particular episode detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode APIs'], operation_id='delete particular episode detail [IsAdminOrReadOnly]',
 ))
 class Episode_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = Episode.objects.all().select_related('episodemedia').prefetch_related('episodemedia__media_files')
@@ -71,11 +71,11 @@ class Episode_RUD_View(generics.RetrieveUpdateDestroyAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='list all episode general detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='list all episode general detail [IsAdminOrReadOnly]',
     operation_description='list all episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='create an episode general detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='create an episode general detail [IsAdminOrReadOnly]',
     operation_description='create an episode general detail [IsAdminOrReadOnly]',
 )) 
 class EpisodeGeneralDetail_LC_View(generics.ListCreateAPIView):
@@ -86,16 +86,16 @@ class EpisodeGeneralDetail_LC_View(generics.ListCreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='retrieve particular episode general detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='retrieve particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='update particular episode general detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='update particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='patch particular episode general detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='patch particular episode general detail [IsAdminOrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : Episode General Detail APIs'], operation_id='delete particular episode general  detail [IsAdminOrReadOnly]',
+    tags=['🎞️ App10 : Episode General Detail APIs'], operation_id='delete particular episode general  detail [IsAdminOrReadOnly]',
 ))
 class EpisodeGeneralDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = EpisodeGeneralDetail.objects.all().select_related('episode')
@@ -107,7 +107,7 @@ class EpisodeGeneralDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode Watchlist APIs'], operation_id='list all episode watchlist [IsAdminOrUserWatchlistedEpisode]',
+    tags=['🎞️ App10 : Episode Watchlist APIs'], operation_id='list all episode watchlist [IsAdminOrUserWatchlistedEpisode]',
     operation_description='list all episode watchlist [IsAdminOrUserWatchlistedEpisode]',
 ))
 class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
@@ -118,7 +118,7 @@ class EpisodeUserWatchlist_LC_View(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode Watchlist APIs'], operation_id='create a user watchlist [IsUserEpisodeWatchlist_OrReadOnly]',
+    tags=['🎞️ App10 : Episode Watchlist APIs'], operation_id='create a user watchlist [IsUserEpisodeWatchlist_OrReadOnly]',
     operation_description='create a user watchlist [IsUserEpisodeWatchlist_OrReadOnly]',
 )) 
 class UserEpisodeWatchlistToggleView(generics.CreateAPIView):
@@ -151,7 +151,7 @@ class UserEpisodeWatchlistToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Users Episode Viewing History APIs'], operation_id='see what user viewed [IsAdminOrUserViewedEpisode]',
+    tags=['🎞️ App10 : Users Episode Viewing History APIs'], operation_id='see what user viewed [IsAdminOrUserViewedEpisode]',
     operation_description='see what user viewed [IsAdminOrUserViewedEpisode]',
 ))
 class EpisodeUserViewed_LC_View(generics.ListAPIView):
@@ -162,7 +162,7 @@ class EpisodeUserViewed_LC_View(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Users Episode Viewing History APIs'], operation_id='make an episode as viewed [IsUserViewedEpisode_OrReadOnly]',
+    tags=['🎞️ App10 : Users Episode Viewing History APIs'], operation_id='make an episode as viewed [IsUserViewedEpisode_OrReadOnly]',
     operation_description='make an episode as viewed [IsUserViewedEpisode_OrReadOnly]',
 )) 
 class UserEpisodeViewedToggleView(generics.CreateAPIView):
@@ -194,7 +194,7 @@ class UserEpisodeViewedToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : Episode User Votes APIs'], operation_id='list all episode votes [AllowAny]',
+    tags=['🎞️ App10 : Episode User Votes APIs'], operation_id='list all episode votes [AllowAny]',
     operation_description='list all episode votes [AllowAny]', 
 ))
 class EpisodeVotes_List_View(generics.ListAPIView):
@@ -206,7 +206,7 @@ class EpisodeVotes_List_View(generics.ListAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : Episode User Votes APIs'], operation_id='give vote on an episode [IsEpisodeVoter_OrReadOnly]',
+    tags=['🎞️ App10 : Episode User Votes APIs'], operation_id='give vote on an episode [IsEpisodeVoter_OrReadOnly]',
     operation_description='give vote on an episode [IsEpisodeVoter_OrReadOnly]',
 )) 
 class EpisodeVotesToggleView(generics.CreateAPIView):
@@ -232,11 +232,11 @@ class EpisodeVotesToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='list episode rating and review [AllowAny] [Paginate-10]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='list episode rating and review [AllowAny] [Paginate-10]',
     operation_description='list episode rating and review [AllowAny] [Paginate-10]', 
 ))
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='create an episode rating and review [IsAuthenticated]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='create an episode rating and review [IsAuthenticated]',
     operation_description='create an episode rating and review [IsAuthenticated]', 
 ))
 class EpisodeRatingReview_LC_View(generics.ListCreateAPIView):
@@ -254,16 +254,16 @@ class EpisodeRatingReview_LC_View(generics.ListCreateAPIView):
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='retrieve particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='retrieve particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='put', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='update particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='update particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='patch', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='patch particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='patch particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 @method_decorator(name='delete', decorator=swagger_auto_schema(
-    tags=['App10 : EpisodeRatingReview APIs'], operation_id='delete particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
+    tags=['🎞️ App10 : EpisodeRatingReview APIs'], operation_id='delete particular episode rating and review [IsEpisodeReviewer_OrReadOnly]',
 ))
 class EpisodeRatingReview_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     queryset = EpisodeRatingReview.objects.all().select_related('episode')

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'recommendation_engine',
     'collector_engine',
     'bot_based_search',
+    'core',
     
     'home',
 

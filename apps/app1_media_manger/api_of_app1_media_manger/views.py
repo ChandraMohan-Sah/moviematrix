@@ -159,7 +159,7 @@ class CastListView(generics.ListAPIView):
 @method_decorator(name='post', decorator=swagger_auto_schema(
     tags=['📽️ App1 : CastMedia APIs'], operation_id='create independent cast with media [IsAdminOrReadOnly]',
     operation_description='create independent cast with media [IsAdminOrReadOnly]',
-))
+)) 
 class CastCreateView(generics.CreateAPIView):
     queryset = CastMedia.objects.all()
     serializer_class = CastCreateSerializer
