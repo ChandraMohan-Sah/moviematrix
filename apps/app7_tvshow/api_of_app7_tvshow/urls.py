@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('tvshows/', views.TvShow_LC_View.as_view(), name="tvshow-list-create"),
     path('tvshows/<int:pk>/', views.TvShow_RUD_View.as_view(), name="tvshow-rud"),
+    path('movies_history/', views.TvShowWatchHistoryView.as_view(), name="tvshow-watch-history"),
     
     path('tvshows_general_detail/', views.TvShowGeneralDetail_LC_View.as_view(), name="tvshow-general-detail-list-create"),
     path('tvshows_general_detail/<int:pk>/', views.TvShowGeneralDetail_RUD_View.as_view(), name="tvshow-general-detail-rud"),

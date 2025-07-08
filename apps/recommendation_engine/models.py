@@ -2,6 +2,12 @@ from django.db import models
 
 
  
+'''
+    1. Fetch all movie preferences (watched, rated, etc.)
+    2. Exclude those from the full movie set
+    3. Score unseen movies based on matching genres, directors, or casts from watched/rated ones
+    4. Return top recommended movies
+'''
 
 '''Personalized Movie Recommendation'''
 def personalized_movie_recommendation(user_id):

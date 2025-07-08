@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import ( 
     Episode, EpisodeGeneralDetail, EpisodeWatchlist,
-    EpisodeViewed, EpisodeVotes, EpisodeRatingReview
+    EpisodeViewed, EpisodeVotes, EpisodeRatingReview,
+    EpisodeWatchHistory
 )
 
 
@@ -12,4 +13,5 @@ admin.site.register(EpisodeWatchlist)
 admin.site.register(EpisodeViewed)
 admin.site.register(EpisodeVotes)
 admin.site.register(EpisodeRatingReview)
+admin.site.register(EpisodeWatchHistory)
  

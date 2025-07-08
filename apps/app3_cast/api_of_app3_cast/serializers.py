@@ -41,6 +41,8 @@ class CastSerializer(serializers.ModelSerializer):
             'cast_updated',
         ]
 
+        ref_name = 'app3-castserializer'
+
 
 
 class CastCoreDetailSerializer(serializers.ModelSerializer):

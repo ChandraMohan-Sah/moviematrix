@@ -3,7 +3,7 @@ from .models import (
     TvShow, TvShowGeneralDetail,
     TvShowCoreDetail, TvShowTechSpecs,
     UserTvShowWatchlist, UserTvShowViewed, TvShowVotes,
-    TvShowRatingReview
+    TvShowRatingReview, TvShowWatchHistory
 )
 
 # Register your models here.
@@ -16,3 +16,5 @@ admin.site.register(UserTvShowWatchlist)
 admin.site.register(UserTvShowViewed)
 admin.site.register(TvShowVotes)
 admin.site.register(TvShowRatingReview)
+admin.site.register(TvShowWatchHistory)
+

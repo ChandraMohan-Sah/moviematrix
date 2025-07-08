@@ -2,12 +2,12 @@
 from app7_tvshow.models import (
     TvShow , TvShowGeneralDetail, TvShowCoreDetail, 
     TvShowTechSpecs, TvShowRatingReview, TvShowVotes,
-    UserTvShowWatchlist, UserTvShowViewed
+    UserTvShowWatchlist, UserTvShowViewed, TvShowWatchHistory
 )
 from .serializers import (
     TvShowSerializer, TvshowGeneralDetailSerializer, TvShowCoreDetailSerializer,
     TvShowTechSpecsSerializer, TvShowRatingReviewSerializer, TvShowVotesSerializer,
-    UserTvShowWatchlistSerializer, UserTvShowViewedSerializer
+    UserTvShowWatchlistSerializer, UserTvShowViewedSerializer, TvShowWatchHistorySerializer
 )
 
 from rest_framework import generics, status 
@@ -336,3 +336,19 @@ class UserTvShowViewedToggleView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+
+
+@method_decorator(name='post', decorator=swagger_auto_schema(
+    tags=['App7 : TvShow User History APIs'], operation_id='create a user history [IsAuthenticated]',
+    operation_description='create a user history [IsAuthenticated]',
+)) 
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App7 : TvShow User History APIs'], operation_id='create a user history [IsAuthenticated] [Paginate-10]',
+    operation_description='create a user history',
+)) 
+class TvShowWatchHistoryView(generics.ListCreateAPIView):
+    queryset = TvShowWatchHistory.objects.all()
+    serializer_class = TvShowWatchHistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = GlobalPagination
+    

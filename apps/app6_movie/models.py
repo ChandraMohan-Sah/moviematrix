@@ -151,7 +151,7 @@ class MovieRatingReview(models.Model):
 
     def __str__(self):
         return f"Movie: {self.movie.title} has - Rating: {self.rating}"
-    
+     
 
 
 class UserMovieWatchlist(models.Model):

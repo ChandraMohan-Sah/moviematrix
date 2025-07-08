@@ -140,3 +140,16 @@ class EpisodeRatingReview(models.Model):
         return f"Episode : {self.episode.episode_title} has - Rating: {self.rating}"
 
 
+class EpisodeWatchHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='episode_watch_history')
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name='watch_history')
+    watched_at = models.DateTimeField(auto_now_add=True)
+    duration_watched = models.PositiveIntegerField(null=True, blank=True, help_text="Duration watched in seconds")
+    is_completed = models.BooleanField(default=False, help_text="Whether the episode was fully watched")
+
+    class Meta:
+        ordering = ['-watched_at']  # Latest first
+        unique_together = ('user', 'episode', 'watched_at')  # Prevent duplicate entries at same timestamp
+
+    def __str__(self):
+        return f"{self.user.username} watched {self.episode.episode_title} at {self.watched_at}" 

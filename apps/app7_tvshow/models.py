@@ -178,3 +178,17 @@ class TvShowRatingReview(models.Model):
     def __str__(self):
         return f"TvShow : {self.tvshow.title} has - Rating: {self.rating}"
     
+
+class TvShowWatchHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tvshow_watch_history')
+    tvshow = models.ForeignKey(TvShow, on_delete=models.CASCADE, related_name='watch_history')
+    watched_at = models.DateTimeField(auto_now_add=True)
+    duration_watched = models.PositiveIntegerField(null=True, blank=True, help_text="Duration watched in seconds")
+    is_completed = models.BooleanField(default=False, help_text="Whether the tvshow was fully watched")
+
+    class Meta:
+        ordering = ['-watched_at']  # Latest first
+        unique_together = ('user', 'tvshow', 'watched_at')  # Prevent duplicate entries at same timestamp
+
+    def __str__(self):
+        return f"{self.user.username} watched {self.tvshow.title} at {self.watched_at}" 

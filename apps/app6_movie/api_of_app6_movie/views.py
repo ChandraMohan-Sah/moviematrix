@@ -378,11 +378,11 @@ class UserMovieViewedToggleView(generics.CreateAPIView):
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
-    tags=['App6 : MovieHistory APIs'], operation_id='create a user history [IsAuthenticated]',
+    tags=['App6 : Movie User History APIs'], operation_id='create a user history [IsAuthenticated]',
     operation_description='create a user history [IsAuthenticated]',
 )) 
 @method_decorator(name='get', decorator=swagger_auto_schema(
-    tags=['App6 : MovieHistory APIs'], operation_id='create a user history [IsAuthenticated] [Paginate-10]',
+    tags=['App6 : Movie User History APIs'], operation_id='create a user history [IsAuthenticated] [Paginate-10]',
     operation_description='create a user history',
 )) 
 class MovieWatchHistoryView(generics.ListCreateAPIView):

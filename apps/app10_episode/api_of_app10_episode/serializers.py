@@ -3,12 +3,13 @@ from rest_framework import serializers
 from app1_media_manger.models import MediaFile, EpisodeMedia
 from app10_episode.models import ( 
     Episode, EpisodeGeneralDetail, EpisodeWatchlist,
-    EpisodeViewed, EpisodeVotes, EpisodeRatingReview
+    EpisodeViewed, EpisodeVotes, EpisodeRatingReview,
+    EpisodeWatchHistory
 )
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
+ 
  
 
 
@@ -234,3 +235,32 @@ class EpisodeRatingReviewSerializer(serializers.ModelSerializer):
         ]
 
 
+class EpisodeWatchHistorySerializer(serializers.ModelSerializer):
+    episode = EpisodeSerializer(read_only=True)
+    episode_id = serializers.PrimaryKeyRelatedField(
+        queryset=Episode.objects.all(),
+        source='episode',
+        write_only=True
+    )
+    user = serializers.StringRelatedField(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source='user',
+        write_only=True
+    )
+
+    class Meta:
+        model = EpisodeWatchHistory
+        fields = [
+            'id',
+            'episode',
+            'episode_id',
+            'user',
+            'user_id',
+            'watched_at',
+            'duration_watched',
+            'is_completed'
+        ]
+        
+
+        

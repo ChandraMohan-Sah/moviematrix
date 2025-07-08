@@ -140,6 +140,13 @@ SWAGGER_SETTINGS = {
     },
 }
 
+# caching
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+      'LOCATION': 'cached_table',
+   }
+}
 
 
 # Sphinix Documentaion Configuration

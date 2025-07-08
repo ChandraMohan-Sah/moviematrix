@@ -10,7 +10,7 @@ from app8_lang_prod_company.models import Language, ProductionCompany
 from app7_tvshow.models import ( 
     TvShow, TvShowGeneralDetail, TvShowCoreDetail, 
     TvShowTechSpecs, TvShowRatingReview, TvShowVotes, 
-    UserTvShowWatchlist, UserTvShowViewed
+    UserTvShowWatchlist, UserTvShowViewed, TvShowWatchHistory
 )
 
 
@@ -386,3 +386,32 @@ class UserTvShowViewedSerializer(serializers.ModelSerializer):
             'removed_at'
         ]
 
+
+
+class TvShowWatchHistorySerializer(serializers.ModelSerializer):
+    tvshow = TvShowSerializer(read_only=True)
+    tvshow_id = serializers.PrimaryKeyRelatedField(
+        queryset=TvShow.objects.all(),
+        source='tvshow',
+        write_only=True
+    )
+    user = serializers.StringRelatedField(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source='user',
+        write_only=True
+    )
+
+    class Meta:
+        model = TvShowWatchHistory
+        fields = [
+            'id',
+            'tvshow',
+            'tvshow_id',
+            'user',
+            'user_id',
+            'watched_at',
+            'duration_watched',
+            'is_completed'
+        ]
+        

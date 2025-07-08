@@ -111,7 +111,7 @@ class MovieSerializer(serializers.ModelSerializer):
             'movie_created',
             'movie_updated'
         ]
-
+        ref_name = 'MovieApp6Serializer' 
 
 
 class MovieGeneralDetailSerializer(serializers.ModelSerializer):

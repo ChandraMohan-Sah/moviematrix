@@ -3,13 +3,15 @@ from rest_framework import generics , status
 from rest_framework.response import Response
 from app10_episode.models import ( 
     Episode,  EpisodeGeneralDetail , EpisodeWatchlist,
-    EpisodeViewed, EpisodeVotes, EpisodeRatingReview
+    EpisodeViewed, EpisodeVotes, EpisodeRatingReview,
+    EpisodeWatchHistory
 )
 
 from app10_episode.api_of_app10_episode.serializers import ( 
     EpisodeSerializer , EpisodeGeneralDetailSerializer, 
     UserEpisodeWatchlistSerializer, UserEpisodeViewedSerializer, 
-    EpisodeVotesSerializer, EpisodeRatingReviewSerializer
+    EpisodeVotesSerializer, EpisodeRatingReviewSerializer, 
+    EpisodeWatchHistorySerializer
 )
 
 # swagger docs 
@@ -271,3 +273,20 @@ class EpisodeRatingReview_RUD_View(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsEpisodeReviewer_OrReadOnly]
 
 
+
+
+
+@method_decorator(name='post', decorator=swagger_auto_schema(
+    tags=['App10 : Episode User History APIs'], operation_id='create a user history [IsAuthenticated]',
+    operation_description='create a user history [IsAuthenticated]',
+)) 
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['App10 : Episode User History APIs'], operation_id='create a user history [IsAuthenticated] [Paginate-10]',
+    operation_description='create a user history',
+)) 
+class EpisodeWatchHistoryView(generics.ListCreateAPIView):
+    queryset = EpisodeWatchHistory.objects.all()
+    serializer_class = EpisodeWatchHistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = GlobalPagination
+    
