@@ -43,7 +43,7 @@ def personalized_movie_recommendation(user):
     seen_ids = set(rated_ids) | set(watchlist_ids) | set(viewed_ids) | set(voted_ids) | set(watched_ids)
 
     if not seen_ids:
-        return Movie.objects.all().order_by('-movie_created').prefetch_related(
+        return Movie.objects.order_by('-movie_created').prefetch_related(
             'movie_genre', 'movie_creator', 'movie_cast', 'moviemedia__media_files'
         )[:10]
 

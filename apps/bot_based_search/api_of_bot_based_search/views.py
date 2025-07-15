@@ -17,9 +17,6 @@ from .serializers import  (
 )
 
 
-
-
-
 #models 
 from app6_movie.models import Movie, UserMovieWatchlist
 from app3_cast.models import Cast
@@ -144,9 +141,6 @@ class BasedOn_Movie_Cast(generics.ListAPIView):
         ).distinct()
 
 
-
-
-
 class BasedOn_Movie_Ratings(generics.ListAPIView):
     serializer_class = MovieTitleSerializer
     filter_backends = [DjangoFilterBackend]
@@ -179,18 +173,6 @@ class BasedOn_Movie_Ratings(generics.ListAPIView):
         return context
 
 
-
-
-class BasedOn_TvShow_Cast(generics.ListAPIView):
-    pass 
-
-class BasedOn_TvShow_Ratings(generics.ListAPIView):
-    pass 
-
-class BasedOn_Episode_Ratings(generics.ListAPIView):
-    pass 
-
-
 class BasedOn_Movie_Genre(generics.ListAPIView):
     serializer_class = MovieTitleSerializer
     filter_backends = [DjangoFilterBackend]
@@ -213,6 +195,17 @@ class BasedOn_Movie_Genre(generics.ListAPIView):
             'movie_core_detail__release_date',
             'movie_core_detail__also_known_as'
         )
+
+
+
+class BasedOn_TvShow_Cast(generics.ListAPIView):
+    pass 
+
+class BasedOn_TvShow_Ratings(generics.ListAPIView):
+    pass 
+
+class BasedOn_Episode_Ratings(generics.ListAPIView):
+    pass 
 
 
 

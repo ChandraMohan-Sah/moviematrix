@@ -16,3 +16,5 @@ class UserDashboardView(generics.RetrieveAPIView):
         user = self.request.user
         obj, created = UserDashboard.objects.get_or_create(user=user)
         return obj
+    
+    

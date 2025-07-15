@@ -115,7 +115,6 @@ class MovieCreateView(generics.CreateAPIView):
         output_serializer = MovieSerializerWithMedia(movie_qs, many=many)
         return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
- 
 @method_decorator(name='get', decorator=swagger_auto_schema(
     tags=['📽️ App1 : MovieMedia APIs'], operation_id='retrieve particular movie detail [IsAdminOrReadOnly]',
 ))
@@ -135,45 +134,30 @@ class MovieDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return MovieMedia.objects.prefetch_related('media_files').all()
-    
+
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         output_serializer = MovieSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method == 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         movie = serializer.save()
 
-        # Refetch with media files for output
-        movie_with_media = MovieMedia.objects.prefetch_related(
-            'media_files'
-        ).get(id=movie.id)
-
+        movie_with_media = MovieMedia.objects.prefetch_related('media_files').get(id=movie.id)
         output_serializer = MovieSerializerWithMedia(movie_with_media)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
 
-    def patch(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)  # Use partial=True for patch
-        serializer.is_valid(raise_exception=True)
-        movie = serializer.save()
-
-        # Refetch with media files for output
-        movie_with_media = MovieMedia.objects.prefetch_related(
-            'media_files'
-        ).get(id=movie.id)
-
-        output_serializer = MovieSerializerWithMedia(movie_with_media)
-        return Response(output_serializer.data, status=status.HTTP_200_OK)
-    
+    put = update
+    patch = update
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.delete()
-        return Response({'detail': 'Moviemedia deleted successfully.'},status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail': 'Moviemedia deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 
@@ -245,9 +229,10 @@ class CastDetailView(generics.RetrieveUpdateDestroyAPIView):
         output_serializer = CastSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method == 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         cast = serializer.save()
 
@@ -256,6 +241,9 @@ class CastDetailView(generics.RetrieveUpdateDestroyAPIView):
         ).get(id=cast.id)
         output_serializer = CastSerializerWithMedia(cast_with_media)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+
+    put = update
+    patch = update
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -336,9 +324,10 @@ class CreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
         output_serializer = CreatorSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method == 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         creator = serializer.save()
 
@@ -347,6 +336,9 @@ class CreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
         ).get(id=creator.id)
         output_serializer = CreatorSerializerWithMedia(creator)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+
+    put = update
+    patch = update
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -428,12 +420,13 @@ class WriterDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
+        partial = request.method == 'PATCH'
         output_serializer = WriterSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         writer = serializer.save()
 
@@ -443,6 +436,9 @@ class WriterDetailView(generics.RetrieveUpdateDestroyAPIView):
 
         output_serializer = WriterSerializerWithMedia(writer)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+
+    put = update 
+    patch = update 
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -522,15 +518,19 @@ class TVShowDetailView(generics.RetrieveUpdateDestroyAPIView):
         output_serializer = TVShowSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method == 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         tvshow = serializer.save()
 
         tvshow = TVShowMedia.objects.prefetch_related('media_files').get(id = tvshow.id)
         output_serializer = TVShowSerializerWithMedia(tvshow)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+    
+    put = update 
+    patch = update 
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -615,9 +615,10 @@ class SeasonDetailView(generics.RetrieveUpdateDestroyAPIView):
         output_serializer = SeasonSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method = 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         season = serializer.save()
 
@@ -627,6 +628,10 @@ class SeasonDetailView(generics.RetrieveUpdateDestroyAPIView):
 
         output_serializer = SeasonSerializerWithMedia(season)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+
+    put = update 
+    patch = update 
+
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -705,15 +710,19 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
         output_serializer = EpisodeSerializerWithMedia(instance)
         return Response(output_serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        partial = request.method = 'PATCH'
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         episode = serializer.save()
 
         episode = EpisodeMedia.objects.select_related('tvshow', 'season').prefetch_related('media_files').get(id=episode.id)
         output_serializer = EpisodeSerializerWithMedia(episode)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
+    
+    put = update 
+    patch = update 
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
