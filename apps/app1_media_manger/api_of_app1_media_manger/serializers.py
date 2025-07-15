@@ -30,22 +30,36 @@ class MediaFileSerializer(serializers.ModelSerializer):
 
 # Mixin to Fetch Media from GenericRelation
 # -------------------------------------------------------------------------------------------
+'''----Less Optimized----'''
+# class MediaFileMixin:
+#     def get_media(self, obj, media_type):
+#         return MediaFileSerializer(obj.media_files.filter(media_type=media_type), many=True).data
+
+'''----Database Optimized Code----'''
 class MediaFileMixin:
     def get_media(self, obj, media_type):
-        return MediaFileSerializer(obj.media_files.filter(media_type=media_type), many=True).data
+        media_list = obj.media_files.all()  # safe as prefetch_related is used
+        
+        media = []
+        for m in media_list:
+            if m.media_type == media_type:
+                media.append(m)
+
+        return MediaFileSerializer(media, many=True).data
+
 
 # Basic Serializer 
 # -------------------------------------------------------------------------------------------
-# class MovieSerializer(serializers.ModelSerializer):
-#     banner = MediaFileSerializer(many=True, read_only=True)
-#     thumbnail = MediaFileSerializer(many=True, read_only=True)
-#     trailer = MediaFileSerializer(many=True, read_only=True)
-#     video = MediaFileSerializer(many=True, read_only=True)
+class MovieSerializer(serializers.ModelSerializer):
+    banner = MediaFileSerializer(many=True, read_only=True)
+    thumbnail = MediaFileSerializer(many=True, read_only=True)
+    trailer = MediaFileSerializer(many=True, read_only=True)
+    video = MediaFileSerializer(many=True, read_only=True)
 
 
-#     class Meta:
-#         model = MovieMedia
-#         fields = ['id', 'name', 'banner', 'thumbnail', 'trailer', 'video']
+    class Meta:
+        model = MovieMedia
+        fields = ['id', 'name', 'banner', 'thumbnail', 'trailer', 'video']
     
 
 
@@ -134,7 +148,7 @@ class EpisodeSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
     videos = serializers.SerializerMethodField()
     episode_slug = serializers.SlugField(read_only=True) 
 
-    class Meta:
+    class Meta: 
         model = EpisodeMedia
         fields = ['id', 'title', 'tvshow', 'season', 'thumbnails', 'videos', 'episode_slug']
 
@@ -150,25 +164,26 @@ class EpisodeSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
 
 
 class SeasonSerializerWithMedia(serializers.ModelSerializer):
-    tvshow = serializers.SlugRelatedField(slug_field='name', queryset=TVShowMedia.objects.all())
-    episodes = EpisodeSerializerWithMedia(many=True, read_only=True)
+    tvshow = serializers.SlugRelatedField(
+        slug_field='name', 
+        queryset=TVShowMedia.objects.prefetch_related('media_files').all()
+    )
 
     class Meta:
         model = SeasonMedia
-        fields = ['id','season_number', 'tvshow', 'episodes']
+        fields = ['id','season_number', 'tvshow']
 
 
 
 
 class TVShowSerializerWithMedia(serializers.ModelSerializer, MediaFileMixin):
-    seasons = SeasonSerializerWithMedia(many=True, read_only=True)
     banners = serializers.SerializerMethodField()
     thumbnails = serializers.SerializerMethodField()
     trailers = serializers.SerializerMethodField()
 
     class Meta:
         model = TVShowMedia
-        fields = ['id', 'name', 'tvshow_slug' ,'seasons', 'banners', 'thumbnails', 'trailers']
+        fields = ['id', 'name', 'tvshow_slug' , 'banners', 'thumbnails', 'trailers']
 
     def get_banners(self, obj):
         return self.get_media(obj, 'banner')
@@ -364,10 +379,10 @@ class TVShowCreateSerializer(serializers.ModelSerializer):
 
 
 class SeasonCreateSerializer(serializers.ModelSerializer):
-    tvshow = serializers.SlugRelatedField(
-        queryset=TVShowMedia.objects.all(),
-        slug_field='tvshow_slug'
-    )
+    # tvshow = serializers.SlugRelatedField(
+    #     queryset=TVShowMedia.objects.prefetch_related('media_files').all(),
+    #     slug_field='tvshow_slug'
+    # )
         
     banners = serializers.ListField(child=serializers.URLField(), required=False)
     thumbnails = serializers.ListField(child=serializers.URLField(), required=False)
@@ -399,35 +414,34 @@ class SeasonCreateSerializer(serializers.ModelSerializer):
 
 
 class EpisodeCreateSerializer(serializers.ModelSerializer):
-    tvshow = serializers.SlugRelatedField(
-        queryset=TVShowMedia.objects.all(),
-        slug_field='tvshow_slug'
-    )
     season_number = serializers.IntegerField(write_only=True)
     thumbnails = serializers.ListField(child=serializers.URLField(), required=False)
     videos = serializers.ListField(child=serializers.URLField(), required=False)
-    episode_slug = serializers.SlugField(read_only=True) 
+    episode_slug = serializers.SlugField(read_only=True)
 
     class Meta:
         model = EpisodeMedia
         fields = ['id', 'title', 'tvshow', 'season_number', 'thumbnails', 'videos', 'episode_slug']
 
     def validate(self, data):
-        tvshow = data.get('tvshow')
-        season_number = data.pop('season_number')
-
-        # Find Season object by tvshow + season_number
-        try:
-            season = SeasonMedia.objects.get(tvshow=tvshow, season_number=season_number)
-        except SeasonMedia.DoesNotExist:
-            raise serializers.ValidationError("Season with that number does not exist for this TV show.")
-        
-        data['season'] = season  # Add to validated data
+        if 'tvshow' not in data or 'season_number' not in data:
+            raise serializers.ValidationError("Both 'tvshow' and 'season_number' are required.")
         return data
 
     def create(self, validated_data):
         thumbnails = validated_data.pop('thumbnails', [])
         videos = validated_data.pop('videos', [])
+
+        tvshow = validated_data['tvshow']
+        season_number = validated_data.pop('season_number')
+
+        try:
+            season = SeasonMedia.objects.get(tvshow=tvshow, season_number=season_number)
+        except SeasonMedia.DoesNotExist:
+            raise serializers.ValidationError("Season with that number does not exist for this TV show.")
+
+        validated_data['season'] = season
+
         episode = EpisodeMedia.objects.create(**validated_data)
 
         content_type = ContentType.objects.get_for_model(episode)
@@ -444,5 +458,5 @@ class EpisodeCreateSerializer(serializers.ModelSerializer):
         create_media_files(thumbnails, 'thumbnail')
         create_media_files(videos, 'video')
         return episode
- 
+
 # -------------------------------------------------------------------------------------------

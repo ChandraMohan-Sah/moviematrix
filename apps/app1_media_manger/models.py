@@ -58,7 +58,7 @@ class TVShowMedia(models.Model):
     def __str__(self):
         return self.name
     
-
+ 
 class SeasonMedia(models.Model):
     tvshow = models.ForeignKey(TVShowMedia, on_delete=models.CASCADE, related_name='seasons')
     season_number = models.PositiveIntegerField()
@@ -136,6 +136,7 @@ class MediaFile(models.Model):
     object_id = models.PositiveIntegerField()
     related_object = GenericForeignKey('content_type', 'object_id')
 
+    
     def __str__(self):
         return f"ID-{self.object_id}: {self.media_type} for {self.related_object} ({self.content_type})"
 

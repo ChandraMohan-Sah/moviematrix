@@ -1,26 +1,33 @@
 # urls.py
 from django.urls import path
-from . import views
-
+from . import views 
+ 
 urlpatterns = [
-    path('movies/', views.Movie_LC_View.as_view(), name="movie-list-create"),
+    path('movies_list/', views.MovieListView.as_view(), name="movie-list-create"),
+    path('movies_create/', views.MovieCreateView.as_view(), name="movie-create"),
     path('movies/<int:pk>/', views.Movie_RUD_View.as_view(), name="movie-rud"),
-    path('movies_history/', views.MovieWatchHistoryView.as_view(), name="movie-watch-history"),
+    path('movies_history_list/', views.MovieWatchHistory_L_View.as_view(), name="list-movie-watch-history"),
+    path('movies_history_create/', views.MovieWatchHistory_C_View.as_view(), name="create-movie-watch-history"),
     
-    path('moviesgeneraldetail/', views.MovieGeneralDetail_LC_View.as_view(), name="moviegeneraldetail-list-create"),
+    path('moviesgeneraldetail_list/', views.MovieGeneralDetail_L_View.as_view(), name="moviegeneraldetail-list"),
+    path('moviesgeneraldetail_create/', views.MovieGeneralDetail_C_View.as_view(), name="moviegeneraldetail-create"),
     path('moviesgeneraldetail/<int:pk>/', views.MovieGeneralDetail_RUD_View.as_view(), name="moviegeneraldetail-rud"),
 
-    path('moviecoredetail/', views.MovieCoreDetail_LC_View.as_view(), name="moviecoredetail-list-create"),
+    path('moviecoredetail_list/', views.MovieCoreDetail_L_View.as_view(), name="moviecoredetail-list"),
+    path('moviecoredetail_create/', views.MovieCoreDetail_C_View.as_view(), name="moviecoredetail-create"),
     path('moviescoredetail/<int:pk>/', views.MovieCoreDetail_RUD_View.as_view(), name="moviecoredetail-rud"),
 
-    path('movieboxofficedetail/', views.MovieBoxOffice_LC_View.as_view(), name="movieboxofficedetail-list-create"),
+    path('movieboxofficedetail_list/', views.MovieBoxOffice_L_View.as_view(), name="movieboxofficedetail-list"),
+    path('movieboxofficedetail_create/', views.MovieBoxOffice_C_View.as_view(), name="movieboxofficedetail-create"),
     path('movieboxofficedetail/<int:pk>/', views.MovieBoxOffice_RUD_View.as_view(), name="movieboxofficedetail-rud"),
 
-    path('movietechspecsdetail/', views.MovieTechSpecs_LC_View.as_view(), name="movietechspecsdetail-list-create"),
+    path('movietechspecsdetail_list/', views.MovieTechSpecs_L_View.as_view(), name="movietechspecsdetail-list"),
+    path('movietechspecsdetail_create/', views.MovieTechSpecs_C_View.as_view(), name="movietechspecsdetail-create"),
     path('movietechspecsdetail/<int:pk>/', views.MovieTechSpecs_RUD_View.as_view(), name="movietechspecsdetail-rud"),
 
     # user specific 
-    path('movieratingreview/', views.MovieRatingReview_LC_View.as_view(), name="movie_rating_review_detail-list-create"),
+    path('movieratingreview_list/', views.MovieRatingReview_L_View.as_view(), name="movie_rating_review_detail-list"),
+    path('movieratingreview_create/', views.MovieRatingReview_C_View.as_view(), name="movie_rating_review_detail-create"),
     path('movieratingreview/<int:pk>/', views.MovieRatingReview_RUD_View.as_view(), name="movie_rating_review_detail-rud"),
 
     path('usermoviewatchlist/', views.UserMovieWatchlist_List_View.as_view(), name='user-watchlist'),

@@ -7,7 +7,7 @@ from app7_tvshow.api_of_app7_tvshow.serializers import (
 )
 from app6_movie.api_of_app6_movie.serializers import (
     UserMovieWatchlistSerializer, UserMovieViewedSerializer,
-    MovieRatingReviewSerializer, MovieWatchHistorySerializer
+    MovieRatingReview_ReadSerializer, MovieWatchHistory_ReadSerializer
 )
 from app10_episode.api_of_app10_episode.serializers import (
     UserEpisodeWatchlistSerializer, UserEpisodeViewedSerializer,
@@ -79,7 +79,7 @@ class UserDashboardSerializer(serializers.ModelSerializer):
 
     def get_movie_ratings_reviews(self, obj):
         qs = obj.movie_ratings_reviews
-        return MovieRatingReviewSerializer(qs, many=True, context=self.context).data
+        return MovieRatingReview_ReadSerializer(qs, many=True, context=self.context).data
 
     def get_tvshow_rating_reviews(self, obj):
         qs = obj.tvshow_rating_reviews
@@ -93,4 +93,5 @@ class UserDashboardSerializer(serializers.ModelSerializer):
     def get_movie_watch_history(self, obj):
         qs = obj.movie_watch_history
         print(f"User: {obj.user.username}, Watch History QS: {qs}")
-        return MovieWatchHistorySerializer(qs, many=True, context=self.context).data
+        return MovieWatchHistory_ReadSerializer(qs, many=True, context=self.context).data
+    

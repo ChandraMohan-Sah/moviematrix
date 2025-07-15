@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     # django restframework
     'rest_framework',
 
+    # django filter
+    'django_filters',
+
     # swagger
     'drf_yasg',
 
@@ -58,6 +61,16 @@ INSTALLED_APPS = [
 
     # Django Documentation
     'docs',
+
+    # Django Silk
+    'silk',
+
+    # django debug
+    'debug_toolbar',
+
+    # django-extensions
+    'django_extensions',
+
     
 ]
 
@@ -69,6 +82,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # django-silk
+    'silk.middleware.SilkyMiddleware',
+    # django-debug
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -123,9 +140,13 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 REST_FRAMEWORK = {
+    # token authentication
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+
+    # filtering 
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # For token authentication in swagger UI
@@ -148,7 +169,17 @@ CACHES = {
    }
 }
 
+# django silk setup
+SILKY_PYTHON_PROFILER = True
+SILKY_INTERCEPT_PERCENT = 100  # profile all requests
+
+# django debug toolbar setup
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Sphinix Documentaion Configuration
 DOCS_ROOT = os.path.join(BASE_DIR, '../docs/_build/html')
 DOCS_ACCESS = 'staff'
+
+

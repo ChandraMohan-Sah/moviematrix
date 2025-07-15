@@ -6,8 +6,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
-from app6_movie.api_of_app6_movie.serializers import MovieSerializer
+from app6_movie.api_of_app6_movie.serializers import MovieReadSerializer
 from app6_movie.models import Movie
+from django.core.cache import cache
 
 from drf_yasg.utils import swagger_auto_schema
 
@@ -21,32 +22,35 @@ from drf_yasg.utils import swagger_auto_schema
 @permission_classes([IsAuthenticated])
 def users_movie_preferences(request):
     user = request.user
-    preferences = {}
-    
-    # Rated or reviewed
-    rated_ids = MovieRatingReview.objects.filter(user_movie_review=user).values_list('movie_id', flat=True)
-    rated_movies = Movie.objects.filter(id__in=rated_ids)
-    preferences['rated_reviewed'] = MovieSerializer(rated_movies, many=True).data
+    cache_key = f'user_prefs_{user.id}'
 
-    # Watchlisted
-    watchlisted_ids = UserMovieWatchlist.objects.filter(user_watchlist=user).values_list('movie_id', flat=True)
-    watchlisted_movies = Movie.objects.filter(id__in=watchlisted_ids)
-    preferences['watchlisted'] = MovieSerializer(watchlisted_movies, many=True).data
+    data = cache.get(cache_key)
+    if data:
+        return Response(data)
 
-    # Viewed
-    viewed_ids = UserMovieViewed.objects.filter(user_viewed=user).values_list('movie_id', flat=True)
-    viewed_movies = Movie.objects.filter(id__in=viewed_ids)
-    preferences['viewed'] = MovieSerializer(viewed_movies, many=True).data
+    rated_ids = set(MovieRatingReview.objects.filter(user_movie_review=user).values_list('movie_id', flat=True))
+    watchlisted_ids = set(UserMovieWatchlist.objects.filter(user_watchlist=user).values_list('movie_id', flat=True))
+    viewed_ids = set(UserMovieViewed.objects.filter(user_viewed=user).values_list('movie_id', flat=True))
+    voted_ids = set(MovieVotes.objects.filter(user_vote=user).values_list('movie_id', flat=True))
+    watched_ids = set(MovieWatchHistory.objects.filter(user=user).values_list('movie_id', flat=True))
 
-    # Voted
-    voted_ids = MovieVotes.objects.filter(user_vote=user).values_list('movie_id', flat=True)
-    voted_movies = Movie.objects.filter(id__in=voted_ids)
-    preferences['voted'] = MovieSerializer(voted_movies, many=True).data
+    all_ids = rated_ids | watchlisted_ids | viewed_ids | voted_ids | watched_ids
 
-    # Watched (history)
-    watched_ids = MovieWatchHistory.objects.filter(user=user).values_list('movie_id', flat=True)
-    watched_movies = Movie.objects.filter(id__in=watched_ids)
-    preferences['watched'] = MovieSerializer(watched_movies, many=True).data
+    movie_qs = Movie.objects.filter(id__in=all_ids) \
+        .select_related('moviemedia') \
+        .prefetch_related('moviemedia__media_files')
 
-    return Response(preferences)
+    movie_map = {movie.id: movie for movie in movie_qs}
+
+    data = {
+        'rated_reviewed': MovieReadSerializer([movie_map[mid] for mid in rated_ids if mid in movie_map], many=True).data,
+        'watchlisted': MovieReadSerializer([movie_map[mid] for mid in watchlisted_ids if mid in movie_map], many=True).data,
+        'viewed': MovieReadSerializer([movie_map[mid] for mid in viewed_ids if mid in movie_map], many=True).data,
+        'voted': MovieReadSerializer([movie_map[mid] for mid in voted_ids if mid in movie_map], many=True).data,
+        'watched': MovieReadSerializer([movie_map[mid] for mid in watched_ids if mid in movie_map], many=True).data,
+    }
+
+    cache.set(cache_key, data, timeout=300)
+    return Response(data)
+
 

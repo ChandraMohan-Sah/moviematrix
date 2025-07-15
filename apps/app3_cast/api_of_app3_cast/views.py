@@ -5,6 +5,10 @@ from .serializers import (
 )
 from rest_framework import generics
 
+from app1_media_manger.api_of_app1_media_manger.serializers import MediaFile
+from app3_cast.models import CastMedia
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Prefetch
 
 #swagger docs
 from drf_yasg.utils import swagger_auto_schema
@@ -28,7 +32,7 @@ from shared.permissions import IsAdminOrReadOnly
     operation_description='create a cast',
 ))
 class Cast_ListCreate_View(generics.ListCreateAPIView):
-    queryset = Cast.objects.all().select_related('castmedia').prefetch_related('castmedia__media_files')
+    queryset = Cast.objects.select_related('castmedia').prefetch_related('castmedia__media_files').all()
     serializer_class = CastSerializer
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = GlobalPagination
@@ -48,7 +52,7 @@ class Cast_ListCreate_View(generics.ListCreateAPIView):
     tags=['App3 : Cast APIs'], operation_id='delete particular cast detail [IsAdminOrReadOnly]',
 ))
 class Cast_RUD_View(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Cast.objects.all().select_related('castmedia').prefetch_related('castmedia__media_files')
+    queryset = Cast.objects.select_related('cast').prefetch_related('castmedia__media_files')
     serializer_class = CastSerializer
     permission_classes = [IsAdminOrReadOnly]
 
@@ -83,6 +87,7 @@ class CastCoreDetail_ListCreate_View(generics.ListCreateAPIView):
     tags=['App3 : CastCoreDetail APIs'], operation_id='delete particular cast core detail [IsAdminOrReadOnly]',
 ))
 class CastCoreDetail_RUD_View(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CastCoreDetail.objects.select_related('cast')
+    queryset = CastCoreDetail.objects.select_related('cast__castmedia').prefetch_related('cast__castmedia__media_files')
     serializer_class = CastCoreDetailSerializer
     permission_classes = [IsAdminOrReadOnly]
+ 

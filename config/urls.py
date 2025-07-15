@@ -10,6 +10,9 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+
+from debug_toolbar.toolbar import debug_toolbar_urls
+
 # schema_view = get_schema_view(
 #    openapi.Info(
 #       title="IMDB Media API",
@@ -77,9 +80,15 @@ urlpatterns = [
    #browsable login 
    path('api-auth/', include('rest_framework.urls')),
 
+   # django silk
+   path('silk/', include('silk.urls', namespace='silk')),
+
    #sphinex documentation
    path('docs/', include('docs.urls')),
-]
+
+    # django debug tool
+
+] + debug_toolbar_urls()
 
 
 

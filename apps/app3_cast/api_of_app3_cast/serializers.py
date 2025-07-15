@@ -15,20 +15,42 @@ class MediaFileSerializer(serializers.ModelSerializer):
         ref_name="app4-mediafileserializer"
 
 
+# class MediaFileMixin:
+#     def get_media(self, obj, media_type):
+#         media_list = obj.media_files.all()  # 'media_files' must be prefetched on the queryset to avoid extra DB queries
+        
+#         filtered_media = []
+#         for m in media_list:
+#             if m.media_type == media_type:
+#                 filtered_media.append(m)
 
-class CastSerializer(serializers.ModelSerializer):
+#         return MediaFileSerializer(filtered_media, many=True).data
+ 
+
+class MediaFileMixin:
+    def get_media(self, obj, media_type):
+        # Avoid triggering an extra DB query by relying on prefetched 'media_files'
+        media_list = list(getattr(obj, 'media_files', []))  # Use list instead of .all()
+        
+        # Filter in memory (no DB hit)
+        filtered_media = [m for m in media_list if m.media_type == media_type]
+
+        return MediaFileSerializer(filtered_media, many=True).data
+    
+
+class CastSerializer(serializers.ModelSerializer, MediaFileMixin):
     cast_name = serializers.CharField(source='castmedia.name', read_only=True)
-    profile_pic = MediaFileSerializer(many=True, read_only=True)
-    related_pic = MediaFileSerializer(many=True, read_only=True)
+    profile_pic = serializers.SerializerMethodField()
+    related_pic = serializers.SerializerMethodField()
 
-    # Accept castmedia ID when creating
+    # Accept castmedia  when creating
     # castmedia = serializers.PrimaryKeyRelatedField(queryset=CastMedia.objects.all(), write_only=True)
     castmedia = serializers.SlugRelatedField(
         slug_field='name',              # Match using `name` instead of ID
         queryset=CastMedia.objects.all(),
         write_only=True
     )
-
+ 
     class Meta:
         model = Cast
         fields = [
@@ -40,16 +62,21 @@ class CastSerializer(serializers.ModelSerializer):
             'cast_created',
             'cast_updated',
         ]
-
         ref_name = 'app3-castserializer'
 
 
+    def get_profile_pic(self, obj):
+        return self.get_media(obj.castmedia, 'profile_pic')
+    
+    def get_related_pic(self, obj):
+        return self.get_media(obj.castmedia, 'related_pic')
+
 
 class CastCoreDetailSerializer(serializers.ModelSerializer):
-    cast = CastSerializer(read_only=True)
     cast_id = serializers.PrimaryKeyRelatedField(
-        queryset=Cast.objects.all(), source='cast', write_only=True
+        queryset=Cast.objects.select_related('castmedia').all(), write_only=True 
     )
+    # cast_name = serializers.SerializerMethodField()
 
     # spouses, children, relatives, otherwork are JSONFields so DRF handles them natively as lists
     spouses = serializers.ListField(child=serializers.CharField(), required=False)
@@ -61,13 +88,20 @@ class CastCoreDetailSerializer(serializers.ModelSerializer):
         model = CastCoreDetail
         fields = [
             'id',
-            'cast',
             'cast_id',
+            # 'cast_name',
             'height',
-            'born_date',
+            'born_date',  
             'death_date',
             'spouses',
             'children',
             'relatives',
             'otherwork',
         ]
+
+    # def get_cast_name(self, obj):
+    #     return obj.cast.cast_name if obj.cast else None
+    
+
+
+    

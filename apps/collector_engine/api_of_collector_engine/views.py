@@ -9,7 +9,8 @@ from django.db.models import Avg
 from django.db.models import Count
 
 from app6_movie.models import Movie, MovieWatchHistory
-from app6_movie.api_of_app6_movie.serializers import MovieSerializer
+from app6_movie.api_of_app6_movie.serializers import MovieReadSerializer
+
 from app3_cast.models import Cast
 from app3_cast.api_of_app3_cast.serializers import CastSerializer
 
@@ -40,7 +41,10 @@ def get_popular_cast(request):
         casts = list(
             Cast.objects.annotate(
                 avg_rating = Avg('movie_cast__movie_general_detail__avg_rating') # Cast → Movie → MovieGeneralDetail → avg_rating
-            ).order_by('-avg_rating')[:10]
+            )
+            .select_related('castmedia')
+            .prefetch_related('castmedia__media_files')  # Prefetch media files for each cast
+            .order_by('-avg_rating')[:10]
         )
         cache.set(cache_key, casts, timeout=100) # 1hr
     
@@ -56,7 +60,7 @@ def get_popular_cast(request):
     method='get',
     operation_description="Get top 10 fan favourites movie based on average movie rating and votes.",
     operation_id='get fan favourites',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 )
 @api_view(['GET'])
@@ -69,13 +73,16 @@ def get_fan_favourites(request):
             Movie.objects.annotate(
                 avg_rating=Avg('movie_reviews__rating'),
                 num_votes=Count('votes')
-            ).order_by('-avg_rating', '-num_votes')[:10]
+            )
+            .select_related('moviemedia')
+            .prefetch_related('moviemedia__media_files')  # Prefetch media files for each movie
+            .order_by('-avg_rating', '-num_votes')[:10]
         )
         cache.set(cache_key, movies, timeout=100)
     
-    serialized = MovieSerializer(movies, many=True)
+    serialized = MovieReadSerializer(movies, many=True)
     return Response(serialized.data)
-    
+
 
 
 '''Popular Movies'''
@@ -84,7 +91,7 @@ def get_fan_favourites(request):
     method='get',
     operation_description="Get top 10 popular movies based on average movie votes.",
     operation_id='get popular movie',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -96,12 +103,17 @@ def get_popular_movies(request):
         movies = list(
             Movie.objects.annotate(
                 num_votes=Count('votes')
-            ).order_by('-num_votes')[:10]
+            )
+            .select_related('moviemedia')
+            .prefetch_related('moviemedia__media_files')  # Prefetch media files for each movie
+            .order_by('-num_votes')[:10]
         )
         cache.set(cache_key, movies, timeout=100) # 1hr
 
-    serialized = MovieSerializer(movies, many=True)
+    serialized = MovieReadSerializer(movies, many=True)
     return Response(serialized.data)
+
+
 
 
 
@@ -112,27 +124,32 @@ def get_popular_movies(request):
     method='get',
     operation_description="Get top 10 imdb original movies.",
     operation_id='get imdb original movie',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
 def get_imdb_originals(request):
     cache_key = 'imdb_originals'
-    movies = cache.get(cache_key)
+    movies_data = cache.get(cache_key)
 
-    if movies is None:
-        originals = Movie.objects.filter(movie_general_detail__is_original=True)
-        sampled_movies = random.sample(
-            list(originals),
-            min(10, originals.count())
-        )
-        serializer = MovieSerializer(sampled_movies, many=True)
-        movies = serializer.data 
+    if movies_data is None:
+        # Filter original movies only
+        originals_qs = Movie.objects.filter(movie_general_detail__is_original=True) \
+            .select_related('moviemedia') \
+            .prefetch_related('moviemedia__media_files')
 
-        cache.set(cache_key, movies, timeout=100)
+        # Random sampling inside DB if small dataset or load-efficient way
+        all_ids = list(originals_qs.values_list('id', flat=True))
+        sample_ids = random.sample(all_ids, min(10, len(all_ids)))
 
-    return Response(list(movies))
+        sampled_qs = originals_qs.filter(id__in=sample_ids)
 
+        serializer = MovieReadSerializer(sampled_qs, many=True)
+        movies_data = serializer.data
+
+        cache.set(cache_key, movies_data, timeout=60 * 60)  # cache for 1 hr
+
+    return Response(movies_data)
 
  
 
@@ -143,25 +160,26 @@ def get_imdb_originals(request):
     method='get',
     operation_description="Get top 10 prime video movies.",
     operation_id='get top 10 prime video movies.',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
 def get_prime_video(request):
     cache_key = 'prime_videos'
-    movies = cache.get(cache_key)
+    movies_data = cache.get(cache_key)
 
-    if movies is None: 
-        prime_videos = Movie.objects.filter(
+    if movies_data is None:
+        prime_videos_qs = Movie.objects.filter(
             platform__platform__iexact='prime'
-        )[:10]
+        ).select_related('moviemedia') \
+         .prefetch_related('moviemedia__media_files')[:10]
 
-        serializer = MovieSerializer(prime_videos, many=True)
-        movies = serializer.data 
+        serializer = MovieReadSerializer(prime_videos_qs, many=True)
+        movies_data = serializer.data
 
-        cache.set(cache_key, movies, timeout=100)
+        cache.set(cache_key, movies_data, timeout=60 * 60)  # Cache for 1 hour
 
-    return Response(list(movies))
+    return Response(movies_data)
 
 
 
@@ -171,7 +189,7 @@ def get_prime_video(request):
     method='get',
     operation_description="Get top 10 movies currently in theaters.",
     operation_id='get top 10 movies in theaters.',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -185,9 +203,11 @@ def get_in_theaters(request):
         in_theaters = Movie.objects.filter(
             movie_core_detail__release_date__lte=today,
             movie_core_detail__release_date__gte=today - timedelta(weeks=8)
-        )
+        ).select_related('moviemedia') \
+        .prefetch_related('moviemedia__media_files')[:10]
+        
 
-        serializer = MovieSerializer(in_theaters, many=True)
+        serializer = MovieReadSerializer(in_theaters, many=True)
         movies = serializer.data
         cache.set(cache_key, movies, timeout=100)  # cache for 1 hour
 
@@ -201,30 +221,34 @@ def get_in_theaters(request):
     method='get',
     operation_description="Get top 10 comming soon movies  in theaters.",
     operation_id='get top 10 movies that is comming soon.',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
 def get_coming_soon_editors_pick(request):
     cache_key = 'coming_soon_editors_pick'
-    movies = cache.get(cache_key)
+    movies_data = cache.get(cache_key)
 
-    if movies is None:
+    if movies_data is None:
         today = timezone.now().date()
 
-        coming_soon = Movie.objects.filter(
+        # Filter upcoming releases
+        upcoming_qs = Movie.objects.filter(
             movie_core_detail__release_date__gt=today
-        )
+        ).select_related('moviemedia') \
+         .prefetch_related('moviemedia__media_files')
 
-        # Randomly select up to 10 movies as Editor's Picks
-        sampled = random.sample(list(coming_soon), min(10, coming_soon.count()))
+        # Efficient sampling without loading full objects
+        all_ids = list(upcoming_qs.values_list('id', flat=True))
+        sampled_ids = random.sample(all_ids, min(10, len(all_ids)))
 
-        serializer = MovieSerializer(sampled, many=True)
-        movies = serializer.data
+        sampled_movies = upcoming_qs.filter(id__in=sampled_ids)
 
-        cache.set(cache_key, movies, timeout=100)  # cache for 100 sec
+        serializer = MovieReadSerializer(sampled_movies, many=True)
+        movies_data = serializer.data
+        cache.set(cache_key, movies_data, timeout=100)  # cache for 100 seconds
 
-    return Response(list(movies))
+    return Response(movies_data)
 
 
 
@@ -238,7 +262,7 @@ def get_coming_soon_editors_pick(request):
     method='get',
     operation_description="User Watch History",
     operation_id='User Watch History',
-    responses={200: MovieSerializer(many=True)},
+    responses={200: MovieReadSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -246,7 +270,7 @@ def get_coming_soon_editors_pick(request):
 def get_recently_viewed_movies(request):
     user = request.user
 
-    # Fetch latest 10 watched movie IDs by this user (avoid duplicate movies)
+    # Fetch latest 10 watched movie IDs by this user (distinct movie_id order)
     recent_movie_ids = (
         MovieWatchHistory.objects.filter(user=user)
         .order_by('-watched_at')
@@ -254,14 +278,17 @@ def get_recently_viewed_movies(request):
         .distinct()[:10]
     )
 
-    # Fetch Movie objects in the same order as IDs
-    movies = Movie.objects.filter(id__in=recent_movie_ids)
-    # Optional: maintain order as per watched_at
-    movies = sorted(movies, key=lambda x: recent_movie_ids.index(x.id))
+    # Fetch Movie objects (add related fields to avoid N+1)
+    movies = Movie.objects.filter(id__in=recent_movie_ids) \
+        .select_related('moviemedia') \
+        .prefetch_related('moviemedia__media_files')
 
-    serializer = MovieSerializer(movies, many=True)
+    # Sort the movies in the same order as recent_movie_ids
+    movie_dict = {movie.id: movie for movie in movies}
+    ordered_movies = [movie_dict[mid] for mid in recent_movie_ids if mid in movie_dict]
+
+    serializer = MovieReadSerializer(ordered_movies, many=True)
     return Response(serializer.data)
-
 
 
 

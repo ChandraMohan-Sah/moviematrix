@@ -9,7 +9,7 @@ class Cast(models.Model):
         related_name='app3_cast',
         help_text="write name of CastMedia"
     )
-
+ 
     # Media access shortcut
     @property
     def cast_name(self):

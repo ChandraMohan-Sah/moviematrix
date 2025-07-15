@@ -12,3 +12,4 @@ urlpatterns = [
     path('get_coming_soon_editors_pick/', views.get_coming_soon_editors_pick, name='get-coming-soon-editors-pick'),
     path('get_recently_viewed_movies/', views.get_recently_viewed_movies, name='get-recently-viewed-movies')
 ]
+

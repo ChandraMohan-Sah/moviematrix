@@ -9,7 +9,7 @@ from app8_lang_prod_company.models import Language, ProductionCompany
 from app3_cast.models import Cast
 from app4_creator.models import Creator 
 from app5_writer.models import Writer
-
+ 
  
 '''
     Notes:
@@ -27,7 +27,6 @@ from app5_writer.models import Writer
             Example: A movie has many production companies, and a company works on many movies. 
 '''
 
-
 class Movie(models.Model):
     """Main movie model in app6 with media integration"""
     moviemedia = models.OneToOneField(
@@ -41,26 +40,6 @@ class Movie(models.Model):
     def title(self):
         return self.moviemedia.name
     
-    @property 
-    def trailer(self):
-        return self.moviemedia.media_files.filter(media_type='trailer')
-    
-    @property
-    def video(self):
-        return self.moviemedia.media_files.filter(media_type='video')
-
-    @property
-    def banners(self):
-        return self.moviemedia.media_files.filter(media_type='banner')
-    
-    @property
-    def thumbnails(self):
-        return self.moviemedia.media_files.filter(media_type='thumbnail')
-    
-    @property
-    def related_pic(self):
-        return self.moviemedia.media_files.filter(media_type='related_pic')
-
     movie_genre = models.ManyToManyField(Genre,  related_name='movie_genre')
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE, related_name="movie_released_platform")
 
