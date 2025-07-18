@@ -12,3 +12,25 @@
 - Wrote extensive unit tests to simulate and validate core functionalities across apps.
 - Documented all API endpoints using Swagger UI and Redoc for easy developer integration.
 - Followed a CI/CD pipeline to deploy the backend on a cloud environment for production.
+
+
+## Setup Command 
+```
+# Create virtual environment (using Python 3's built-in venv)
+python3 -m venv .venv
+
+# Activate virtual environment (Linux/macOS)
+source .venv/bin/activate
+
+# Activate virtual environment (Windows PowerShell)
+# .venv\Scripts\Activate.ps1
+
+# Install dependencies (assuming requirements.txt exists)
+pip install -r requirements.txt
+
+# python3 manage.py makemigrations
+# python3 manage.py migrate
+
+# Run Django development server
+python manage.py runserver
+```
