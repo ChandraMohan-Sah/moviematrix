@@ -20,7 +20,9 @@ from .serializers import  (
 
     MovieVotes_ReadSerializer, MovieVotes_WriteSerializer,
     UserMovieWatchlistSerializer, UserMovieViewedSerializer,
-    MovieWatchHistory_ReadSerializer, MovieWatchHistory_WriteSerializer
+    MovieWatchHistory_ReadSerializer, MovieWatchHistory_WriteSerializer,
+
+    MovieDetailSerializer, LightMovieSerializer
 )
 
 from rest_framework import generics , status
@@ -32,6 +34,9 @@ from rest_framework import pagination
 from rest_framework.decorators import permission_classes
 from shared.pagination import GlobalPagination
 
+#caching
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 #permissions
 from rest_framework import permissions
@@ -877,3 +882,109 @@ class MovieWatchHistory_C_View(generics.CreateAPIView):
         return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
  
+'''
+ getMovieDetail: async (movieId) => {
+    try {
+      const response = await api.get(`${endpoints.movieDetail}${movieId}/`)
+      const movie = response.data
+      return {
+        id: movie.id,
+        title: movie.movie_name,
+        year: movie.release_year,
+        rating: movie.content_rating || "Not Rated",
+        duration: movie.duration,
+        genres: movie.genres || [],
+        imdbRating: movie.avg_rating,
+        ratingCount: movie.rating_count || "0",
+        poster: movie.thumbnails[0]?.cdn_url || "/placeholder.svg",
+        backdrop: movie.thumbnails[1]?.cdn_url || movie.thumbnails[0]?.cdn_url || "/placeholder.svg",
+        plot: movie.plot || "",
+        director: movie.director || "Unknown",
+        writers: movie.writers || [],
+        stars: movie.cast?.slice(0, 3).map((c) => c.cast_name) || [],
+        releaseDate: movie.release_date || "",
+        country: movie.country || "",
+        language: movie.language || "",
+        awards: movie.awards || "",
+        cast:
+          movie.cast?.map((c) => ({
+            id: c.id,
+            name: c.cast_name,
+            character: c.character || "",
+            image: c.profile_pic[0]?.cdn_url || "/placeholder.svg",
+          })) || [],
+        crew:
+          movie.crew?.map((c) => ({
+            id: c.id,
+            name: c.name,
+            job: c.job,
+            image: c.profile_pic || "/placeholder.svg",
+          })) || [],
+        photos: movie.thumbnails?.map((t) => t.cdn_url) || [],
+        videos: movie.videos || [],
+        reviews: movie.reviews || [],
+        technicalSpecs: {
+          runtime: movie.duration || "",
+          aspectRatio: movie.aspect_ratio || "16:9",
+          soundMix: movie.sound_mix || "Dolby Digital",
+          color: movie.color || "Color",
+        },
+      }
+    } catch (error) {
+      console.error("Failed to fetch movie detail:", error)
+      throw error
+    }
+  },
+ 
+ '''
+
+
+@method_decorator(name='get', decorator=swagger_auto_schema(
+    tags=['Collector Engine '], operation_id='fetch Movie detail [Paginate-10]',
+    operation_description='fetch Movie detail ',
+)) 
+class MovieDetail(generics.RetrieveAPIView):
+    serializer_class = MovieDetailSerializer
+    lookup_field = 'pk'  # or 'id' if using UUIDs
+
+    @method_decorator(cache_page(60 * 60))  # Cache for 1 hour
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        return (
+            Movie.objects
+            .select_related(
+                'moviemedia',                     # OneToOne
+                'movie_general_detail',           # OneToOne
+                'movie_core_detail',              # OneToOne
+                # 'movie_box_office',               # OneToOne
+                'movie_tech_specs',               # OneToOne
+                'platform',                       # ForeignKey
+            )
+            .prefetch_related(
+                'movie_genre',                    # M2M
+                'movie_cast',    
+                # 'movie_cast__profile_pic',        # M2M + related images
+                'movie_creator',                  # M2M
+                'movie_writer',                   # M2M
+                'movie_core_detail__language',    # M2M inside OneToOne
+                'movie_core_detail__production_companies',  # M2M inside OneToOne
+                'moviemedia__media_files',        # Reverse FK from media
+                'movie_reviews__user_movie_review',  # Reverse FK + user
+            ).only(
+                'id',
+                'moviemedia__name',
+                'moviemedia__id',
+                'platform__platform',
+                'movie_general_detail__avg_rating',
+                'movie_general_detail__number_rating',
+                'movie_general_detail__duration',
+                'movie_general_detail__storyline',
+                'movie_reviews__rating',
+                'movie_core_detail__release_date',
+                'movie_tech_specs__runtime',
+                'movie_tech_specs__sound_mix',
+                'movie_tech_specs__color',
+            )
+        )

@@ -9,7 +9,10 @@ from django.db.models import Avg
 from django.db.models import Count
 
 from app6_movie.models import Movie, MovieWatchHistory
-from app6_movie.api_of_app6_movie.serializers import MovieReadSerializer
+from app6_movie.api_of_app6_movie.serializers import MovieReadSerializer 
+from .serializers import (
+    LightMovieSerializer, PopularCastSerializer, IMDBOriginalsSerializer
+)
 
 from app3_cast.models import Cast
 from app3_cast.api_of_app3_cast.serializers import CastSerializer
@@ -48,7 +51,7 @@ def get_popular_cast(request):
         )
         cache.set(cache_key, casts, timeout=100) # 1hr
     
-    serialized = CastSerializer(casts, many=True)
+    serialized = PopularCastSerializer(casts, many=True)
     return Response(serialized.data)
 
 
@@ -60,7 +63,7 @@ def get_popular_cast(request):
     method='get',
     operation_description="Get top 10 fan favourites movie based on average movie rating and votes.",
     operation_id='get fan favourites',
-    responses={200: MovieReadSerializer(many=True)},
+    responses={200: LightMovieSerializer(many=True)},
     tags=['Collector Engine'],
 )
 @api_view(['GET'])
@@ -80,7 +83,7 @@ def get_fan_favourites(request):
         )
         cache.set(cache_key, movies, timeout=100)
     
-    serialized = MovieReadSerializer(movies, many=True)
+    serialized = LightMovieSerializer(movies, many=True)
     return Response(serialized.data)
 
 
@@ -91,7 +94,7 @@ def get_fan_favourites(request):
     method='get',
     operation_description="Get top 10 popular movies based on average movie votes.",
     operation_id='get popular movie',
-    responses={200: MovieReadSerializer(many=True)},
+    responses={200: LightMovieSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -101,19 +104,16 @@ def get_popular_movies(request):
 
     if movies is None:
         movies = list(
-            Movie.objects.annotate(
-                num_votes=Count('votes')
-            )
-            .select_related('moviemedia')
-            .prefetch_related('moviemedia__media_files')  # Prefetch media files for each movie
-            .order_by('-num_votes')[:10]
+            Movie.objects
+            .select_related('moviemedia', 'movie_general_detail')
+            .prefetch_related('moviemedia__media_files')
+            .order_by('-movie_general_detail__avg_rating')[:10]
         )
-        cache.set(cache_key, movies, timeout=100) # 1hr
+        cache.set(cache_key, movies, timeout=3600)  # cache for 1 hour
 
-    serialized = MovieReadSerializer(movies, many=True)
+    serialized = LightMovieSerializer(movies, many=True)
     return Response(serialized.data)
-
-
+ 
 
 
 
@@ -124,7 +124,7 @@ def get_popular_movies(request):
     method='get',
     operation_description="Get top 10 imdb original movies.",
     operation_id='get imdb original movie',
-    responses={200: MovieReadSerializer(many=True)},
+    responses={200: IMDBOriginalsSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -144,11 +144,10 @@ def get_imdb_originals(request):
 
         sampled_qs = originals_qs.filter(id__in=sample_ids)
 
-        serializer = MovieReadSerializer(sampled_qs, many=True)
+        serializer = IMDBOriginalsSerializer(sampled_qs, many=True)
         movies_data = serializer.data
 
-        cache.set(cache_key, movies_data, timeout=60 * 60)  # cache for 1 hr
-
+        cache.set(cache_key, movies_data, timeout=600)  # cache for 1 hr
     return Response(movies_data)
 
  
@@ -160,7 +159,7 @@ def get_imdb_originals(request):
     method='get',
     operation_description="Get top 10 prime video movies.",
     operation_id='get top 10 prime video movies.',
-    responses={200: MovieReadSerializer(many=True)},
+    responses={200: LightMovieSerializer(many=True)},
     tags=['Collector Engine'],
 ) 
 @api_view(['GET'])
@@ -174,11 +173,10 @@ def get_prime_video(request):
         ).select_related('moviemedia') \
          .prefetch_related('moviemedia__media_files')[:10]
 
-        serializer = MovieReadSerializer(prime_videos_qs, many=True)
+        serializer = LightMovieSerializer(prime_videos_qs, many=True)
         movies_data = serializer.data
 
         cache.set(cache_key, movies_data, timeout=60 * 60)  # Cache for 1 hour
-
     return Response(movies_data)
 
 
@@ -207,7 +205,7 @@ def get_in_theaters(request):
         .prefetch_related('moviemedia__media_files')[:10]
         
 
-        serializer = MovieReadSerializer(in_theaters, many=True)
+        serializer = LightMovieSerializer(in_theaters, many=True)
         movies = serializer.data
         cache.set(cache_key, movies, timeout=100)  # cache for 1 hour
 
@@ -289,6 +287,7 @@ def get_recently_viewed_movies(request):
 
     serializer = MovieReadSerializer(ordered_movies, many=True)
     return Response(serializer.data)
+
 
 
 

@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     # Django Documentation
-    'docs',
+    # 'docs',
 
     # Django Silk
     'silk',
@@ -86,6 +86,8 @@ MIDDLEWARE = [
     'silk.middleware.SilkyMiddleware',
     # django-debug
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # django-cors 
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -183,3 +185,11 @@ DOCS_ROOT = os.path.join(BASE_DIR, '../docs/_build/html')
 DOCS_ACCESS = 'staff'
 
 
+# CORS Setting : allow any origin
+# CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS Setting : whitelist few 
+CORS_ALLOWED_ORIGINS = [
+    # allowed_origins_func,
+    'http://localhost:3000/',
+]

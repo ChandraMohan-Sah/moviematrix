@@ -84,7 +84,7 @@ urlpatterns = [
    path('silk/', include('silk.urls', namespace='silk')),
 
    #sphinex documentation
-   path('docs/', include('docs.urls')),
+   # path('docs/', include('docs.urls')),
 
     # django debug tool
 

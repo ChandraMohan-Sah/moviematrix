@@ -26,7 +26,7 @@ from app5_writer.models import Writer
         - ManyToMany: Many-to-many relationship
             Example: A movie has many production companies, and a company works on many movies. 
 '''
-
+ 
 class Movie(models.Model):
     """Main movie model in app6 with media integration"""
     moviemedia = models.OneToOneField(

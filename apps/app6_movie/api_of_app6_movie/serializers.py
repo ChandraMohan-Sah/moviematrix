@@ -241,6 +241,8 @@ class MovieReadSerializer(serializers.ModelSerializer, MediaFileMixin):
     banners = serializers.SerializerMethodField()
     thumbnails = serializers.SerializerMethodField()
     related_pic = serializers.SerializerMethodField()
+    avg_rating = serializers.FloatField(source='movie_general_detail.avg_rating', read_only=True)
+
 
     # # m2m fields but optimized to fetch its name and id only
     # movie_genre = serializers.SlugRelatedField(
@@ -287,6 +289,7 @@ class MovieReadSerializer(serializers.ModelSerializer, MediaFileMixin):
             # 'movie_cast',
             # 'movie_creator',
             # 'movie_writer',
+            'avg_rating',
             'movie_created',
             'movie_updated',
         ]
@@ -847,6 +850,108 @@ class MovieWatchHistory_WriteSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class LightMovieSerializer(serializers.ModelSerializer, MediaFileMixin):
+    movie_name = serializers.CharField(source='moviemedia.name', read_only=True)
+    thumbnails = serializers.SerializerMethodField()
+    avg_rating = serializers.FloatField(source='movie_general_detail.avg_rating', read_only=True)
+
+    class Meta:
+        model = Movie
+        fields = [
+            'id',
+            'movie_name',
+            'thumbnails',
+            'avg_rating',
+        ]
+    
+    def get_thumbnails(self, obj):
+        return self.get_media(obj.moviemedia, 'thumbnail')
+
+
+class MovieDetailSerializer(serializers.ModelSerializer, MediaFileMixin):
+    title = serializers.CharField(source='moviemedia.name', read_only=True)
+    year = serializers.CharField(source='movie_core_detail.release_year', read_only=True)
+    rating = serializers.CharField(source='movie_general_detail.content_rating', default="Not Rated", read_only=True)
+    duration = serializers.FloatField(source='movie_general_detail.duration', read_only=True)
+    genres = serializers.SlugRelatedField(many=True, read_only=True, slug_field='name', source='movie_genre')
+    imdbRating = serializers.FloatField(source='movie_general_detail.avg_rating', read_only=True)
+    ratingCount = serializers.CharField(source='movie_general_detail.number_rating', default="0", read_only=True)
+
+    # Thumbnails and Backdrop
+    poster = serializers.SerializerMethodField()
+    backdrop = serializers.SerializerMethodField()
+
+
+    plot = serializers.CharField(source='movie_general_detail.storyline', default="", read_only=True)
+    director = serializers.SerializerMethodField()
+    writers = serializers.SlugRelatedField(many=True, read_only=True, slug_field='writer_name', source='movie_writer')
+    stars = serializers.SerializerMethodField()
+
+    cast = serializers.SerializerMethodField()
+    photos = serializers.SerializerMethodField()
+    videos = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
+
+    technicalSpecs = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Movie
+        fields = [
+            'id', 'title', 'year', 'rating', 'duration',  'genres', 'imdbRating', 'ratingCount',
+            'poster', 'backdrop', 'plot', 'director', 'writers',
+            'stars', 'cast', 'photos', 'videos', 'reviews', 'technicalSpecs'
+        ]
+
+
+    def get_poster(self, obj):
+        thumbnails = self.get_media(obj.moviemedia, 'thumbnail')
+        return thumbnails[0]['cdn_url'] if thumbnails else "/placeholder.svg"
+
+    def get_backdrop(self, obj):
+        thumbnails = self.get_media(obj.moviemedia, 'thumbnail')
+        if len(thumbnails) > 1:
+            return thumbnails[1]['cdn_url']
+        elif thumbnails:
+            return thumbnails[0]['cdn_url']
+        return "/placeholder.svg"
+
+
+    def get_director(self, obj):
+        director = obj.movie_creator.first()
+        return director.creator_name if director else "Unknown"
+
+    def get_stars(self, obj):
+        return [cast.cast_name for cast in obj.movie_cast.all()[:3]]
+
+
+    def get_cast(self, obj):
+        return [
+            {
+                'id': cast.id,
+                'name': cast.cast_name,
+                'image': cast.profile_pic.first().cdn_url if cast.profile_pic.exists() else "/placeholder.svg"
+            }
+            for cast in obj.movie_cast.all()
+        ]
+
+    def get_photos(self, obj):
+        return [thumb['cdn_url'] for thumb in self.get_media(obj.moviemedia, 'thumbnail')]
+
+    def get_videos(self, obj):
+        return self.get_media(obj.moviemedia, 'video')
+
+    def get_reviews(self, obj):
+        return MovieRatingReview_ReadSerializer(obj.movie_reviews.all(), many=True).data
+
+    def get_technicalSpecs(self, obj):
+        tech = getattr(obj, 'movie_tech_specs', None)
+        return {
+            "runtime": tech.runtime if tech else "",
+            "soundMix": tech.sound_mix if tech else "Dolby Digital",
+            "color": tech.color if tech else "Color",
+        }
 
 
 

@@ -8,6 +8,7 @@ urlpatterns = [
     path('movies/<int:pk>/', views.Movie_RUD_View.as_view(), name="movie-rud"),
     path('movies_history_list/', views.MovieWatchHistory_L_View.as_view(), name="list-movie-watch-history"),
     path('movies_history_create/', views.MovieWatchHistory_C_View.as_view(), name="create-movie-watch-history"),
+    path('movie/<int:pk>/', views.MovieDetail.as_view(), name='movie-detail'),
     
     path('moviesgeneraldetail_list/', views.MovieGeneralDetail_L_View.as_view(), name="moviegeneraldetail-list"),
     path('moviesgeneraldetail_create/', views.MovieGeneralDetail_C_View.as_view(), name="moviegeneraldetail-create"),

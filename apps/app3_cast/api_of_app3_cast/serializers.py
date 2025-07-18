@@ -27,17 +27,27 @@ class MediaFileSerializer(serializers.ModelSerializer):
 #         return MediaFileSerializer(filtered_media, many=True).data
  
 
+# class MediaFileMixin:
+#     def get_media(self, obj, media_type):
+#         # Avoid triggering an extra DB query by relying on prefetched 'media_files'
+#         media_list = list(getattr(obj, 'media_files', []))  # Use list instead of .all()
+        
+#         # Filter in memory (no DB hit)
+#         filtered_media = [m for m in media_list if m.media_type == media_type]
+
+#         return MediaFileSerializer(filtered_media, many=True).data
+    
 class MediaFileMixin:
     def get_media(self, obj, media_type):
         # Avoid triggering an extra DB query by relying on prefetched 'media_files'
-        media_list = list(getattr(obj, 'media_files', []))  # Use list instead of .all()
+        media_manager = getattr(obj, 'media_files', None)
+        media_list = list(media_manager.all()) if media_manager else []
         
-        # Filter in memory (no DB hit)
+        # Filter in memory (no DB hit if prefetch_related is used)
         filtered_media = [m for m in media_list if m.media_type == media_type]
 
         return MediaFileSerializer(filtered_media, many=True).data
     
-
 class CastSerializer(serializers.ModelSerializer, MediaFileMixin):
     cast_name = serializers.CharField(source='castmedia.name', read_only=True)
     profile_pic = serializers.SerializerMethodField()
