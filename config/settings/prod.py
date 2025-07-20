@@ -1,15 +1,11 @@
 from .base import *
 
-DEBUG = False
-ALLOWED_HOSTS = ['yourdomain.com']  # replace with your actual domain
+DEBUG = True
+ALLOWED_HOSTS = ['moviematrix.pythonanywhere.com']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # example
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', default='5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'database' /'db.sqlite3',
     }
 }
